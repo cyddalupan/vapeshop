@@ -2,3 +2,8 @@ html {
   margin: 0;
   padding: 0;
 }
+
+a {
+  text-transform: none;
+  color: black;
+}

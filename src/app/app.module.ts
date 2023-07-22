@@ -10,6 +10,7 @@ import { ReportsComponent } from './pages/reports/reports.component';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { inventoryReducer } from './pages/inventory/store/inventory.reducer';
+import { ItemComponent } from './pages/pos/item/item.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { inventoryReducer } from './pages/inventory/store/inventory.reducer';
     HomeComponent,
     InventoryComponent,
     PosComponent,
-    ReportsComponent
+    ReportsComponent,
+    ItemComponent
   ],
   imports: [
     BrowserModule,

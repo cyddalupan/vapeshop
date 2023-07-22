@@ -1,5 +1,8 @@
 import { AfterViewInit, Component, ElementRef, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AddItem, SetItem } from '../inventory/store/inventory.action';
+import { selectCurrentItem } from '../inventory/store/inventory.selector';
 
 @Component({
   selector: 'app-pos',
@@ -10,6 +13,7 @@ export class PosComponent implements AfterViewInit {
 
   constructor(
     private router: Router,
+    private store: Store,
     private elementRef: ElementRef,
     private renderer: Renderer2
   ) { }
@@ -24,7 +28,32 @@ export class PosComponent implements AfterViewInit {
     // Process the scanned barcode data here
     console.log('Scanned data:', scannedData);
     
-    this.router.navigateByUrl('/item/222');
+    //this.router.navigateByUrl('/item/222');
+
+    this.store.dispatch(AddItem({
+      id: 1,
+      code: 4800488959878,
+      name: 'Nursy',
+      price: 133,
+      created_at: '2012',
+      updated_at: '2013',
+      deleted_at: null
+    }));
+
+    this.store.dispatch(AddItem({
+      id: 1,
+      code: 16000439894,
+      name: 'two',
+      price: 321,
+      created_at: '2012',
+      updated_at: '2013',
+      deleted_at: null
+    }));
+
+    this.store.dispatch(SetItem("4800488959878"));
+    this.store.select(selectCurrentItem).subscribe(data => {
+      console.log("data",data);
+    });
   }
   
   private setFocusOnInput() {

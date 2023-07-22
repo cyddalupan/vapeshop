@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -7,6 +7,9 @@ import { HomeComponent } from './pages/home/home.component';
 import { InventoryComponent } from './pages/inventory/inventory.component';
 import { PosComponent } from './pages/pos/pos.component';
 import { ReportsComponent } from './pages/reports/reports.component';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { inventoryReducer } from './pages/inventory/store/inventory.reducer';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,11 @@ import { ReportsComponent } from './pages/reports/reports.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    StoreModule.forRoot({
+      inventory: inventoryReducer
+    }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -4,13 +4,13 @@ import { AddItem, SetItem } from "./inventory.action";
 import { Item } from "../model/store.model";
 
 export interface State extends EntityState<Item> {
-  selectedItemId: string;
+  selectedItemId: number;
 }
 
 export const adapter: EntityAdapter<Item> = createEntityAdapter<Item>();
 
 export const initialState: State = adapter.getInitialState({
-  selectedItemId: ''
+  selectedItemId: 0
 });
 
 export const inventoryReducer = createReducer(

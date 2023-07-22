@@ -13,5 +13,5 @@ export const AddItem = createAction(
 
 export const SetItem = createAction(
   ItemActions.SetItem,
-  (itemId: string) => ({ itemId })
+  (itemId: number) => ({ itemId })
 );

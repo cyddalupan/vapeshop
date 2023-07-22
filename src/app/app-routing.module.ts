@@ -12,7 +12,7 @@ const routes: Routes = [
 
   // POS
   { path: 'pos', component: PosComponent },
-  { path: 'item/:code', component: ItemComponent },
+  { path: 'item', component: ItemComponent },
 
   { path: 'reports', component: ReportsComponent },
 

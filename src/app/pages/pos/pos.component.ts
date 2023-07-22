@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AddItem, SetItem } from '../inventory/store/inventory.action';
 import { selectCurrentItem } from '../inventory/store/inventory.selector';
+import { pipe, take } from 'rxjs';
 
 @Component({
   selector: 'app-pos',
@@ -10,6 +11,8 @@ import { selectCurrentItem } from '../inventory/store/inventory.selector';
   styleUrls: ['./pos.component.css']
 })
 export class PosComponent implements AfterViewInit {
+
+  public detectedItem = '';
 
   constructor(
     private router: Router,
@@ -24,7 +27,7 @@ export class PosComponent implements AfterViewInit {
 
     this.store.dispatch(AddItem({
       id: 4800488959878,
-      name: 'Nursy',
+      name: 'Nursy Wet Wipes',
       price: 133,
       created_at: '2012',
       updated_at: '2013',
@@ -33,7 +36,7 @@ export class PosComponent implements AfterViewInit {
 
     this.store.dispatch(AddItem({
       id: 16000439894,
-      name: 'two',
+      name: 'Granola Bar',
       price: 321,
       created_at: '2012',
       updated_at: '2013',
@@ -42,17 +45,18 @@ export class PosComponent implements AfterViewInit {
   }
   
   onBarcodeScanned(event: KeyboardEvent) {
-    const scannedData = (event.target as HTMLInputElement).value;
-    // Process the scanned barcode data here
-    console.log('Scanned data:', scannedData);
-    
-    //this.router.navigateByUrl('/item/222');
+    const scannedData = Number((event.target as HTMLInputElement).value);
 
-
-    //this.store.dispatch(SetItem("4800488959878"));
-    this.store.dispatch(SetItem("160004398"));
-    this.store.select(selectCurrentItem).subscribe(data => {
-      console.log("data",data);
+    this.store.dispatch(SetItem(scannedData));
+    this.store.select(selectCurrentItem).pipe(take(1)).subscribe(item => {
+      if (item) {
+        this.detectedItem = item.name;
+        setTimeout(() => {
+          this.router.navigateByUrl('/item');
+        }, 500);
+       } 
+      else
+        this.detectedItem = 'Item does not exist';
     });
   }
   

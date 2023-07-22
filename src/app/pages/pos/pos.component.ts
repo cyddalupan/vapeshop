@@ -21,6 +21,24 @@ export class PosComponent implements AfterViewInit {
   ngAfterViewInit() {
     // Set focus on the input element after the view has been initialized
     this.setFocusOnInput();
+
+    this.store.dispatch(AddItem({
+      id: 4800488959878,
+      name: 'Nursy',
+      price: 133,
+      created_at: '2012',
+      updated_at: '2013',
+      deleted_at: null
+    }));
+
+    this.store.dispatch(AddItem({
+      id: 16000439894,
+      name: 'two',
+      price: 321,
+      created_at: '2012',
+      updated_at: '2013',
+      deleted_at: null
+    }));
   }
   
   onBarcodeScanned(event: KeyboardEvent) {
@@ -30,27 +48,9 @@ export class PosComponent implements AfterViewInit {
     
     //this.router.navigateByUrl('/item/222');
 
-    this.store.dispatch(AddItem({
-      id: 1,
-      code: 4800488959878,
-      name: 'Nursy',
-      price: 133,
-      created_at: '2012',
-      updated_at: '2013',
-      deleted_at: null
-    }));
 
-    this.store.dispatch(AddItem({
-      id: 1,
-      code: 16000439894,
-      name: 'two',
-      price: 321,
-      created_at: '2012',
-      updated_at: '2013',
-      deleted_at: null
-    }));
-
-    this.store.dispatch(SetItem("4800488959878"));
+    //this.store.dispatch(SetItem("4800488959878"));
+    this.store.dispatch(SetItem("160004398"));
     this.store.select(selectCurrentItem).subscribe(data => {
       console.log("data",data);
     });

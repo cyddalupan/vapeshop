@@ -11,14 +11,18 @@ import { take } from 'rxjs';
 export class ItemComponent implements OnInit {
 
   public itemName = "";
+	public price = 0;
+
   constructor(
     private store: Store
   ) { }
 
     ngOnInit(): void {
       this.store.select(selectCurrentItem).pipe(take(1)).subscribe(item => {
-        if (item)
+        if (item) {
           this.itemName = item.name;
+					this.price = item.price;
+				}
       });
     }
 

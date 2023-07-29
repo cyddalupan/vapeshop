@@ -11,6 +11,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { inventoryReducer } from './pages/inventory/store/inventory.reducer';
 import { ItemComponent } from './pages/pos/item/item.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ItemComponent } from './pages/pos/item/item.component';
     StoreModule.forRoot({
       inventory: inventoryReducer
     }),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

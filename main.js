@@ -8,6 +8,7 @@ function createWindow () {
     webPreferences: {
       nodeIntegration: true, // This is essential to use localStorage
     },
+    icon: __dirname + '/src/assets/img/logo.png',
   })
 
   win.loadFile('dist/vapeshop/index.html');

@@ -5,10 +5,14 @@ import { InventoryComponent } from './pages/inventory/inventory.component';
 import { PosComponent } from './pages/pos/pos.component';
 import { ReportsComponent } from './pages/reports/reports.component';
 import { ItemComponent } from './pages/pos/item/item.component';
+import { InventoryAddComponent } from './pages/inventory/inventory-add/inventory-add.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
+	
+	// Inventory
   { path: 'inventory', component: InventoryComponent },
+  { path: 'inventory-add', component: InventoryAddComponent },
 
   // POS
   { path: 'pos', component: PosComponent },

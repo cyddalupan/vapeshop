@@ -1,6 +1,45 @@
-<div class="text-end">
-	<a routerLink="/home" class="fs-1">
-		 <i class="bi bi-x"></i>
-	</a>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Inventory</li>
+  </ol>
+</nav>
+<br/>
+
+<button type="button" class="btn btn-success" routerLink="/inventory-add">
+	<i class="bi bi-plus-circle"></i>	
+	Add Item
+</button>
+<div class="table-responsive">
+  <table class="table">
+		<caption>Inventory</caption>
+		<thead>
+			<tr>
+				<th scope="col">Barcode</th>
+				<th scope="col">Name</th>
+				<th scope="col">Price</th>
+				<th scope="col">Remarks</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th scope="row">1</th>
+				<td>Mark</td>
+				<td>Otto</td>
+				<td>@mdo</td>
+			</tr>
+			<tr>
+				<th scope="row">2</th>
+				<td>Jacob</td>
+				<td>Thornton</td>
+				<td>@fat</td>
+			</tr>
+			<tr>
+				<th scope="row">3</th>
+				<td>Larry</td>
+				<td>the Bird</td>
+				<td>@twitter</td>
+			</tr>
+		</tbody>
+  </table>
 </div>
-<p>inventory works!</p>

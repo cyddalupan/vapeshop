@@ -1,5 +1,7 @@
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,7 +13,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { inventoryReducer } from './pages/inventory/store/inventory.reducer';
 import { ItemComponent } from './pages/pos/item/item.component';
-import { HttpClientModule } from '@angular/common/http';
+import { InventoryAddComponent } from './pages/inventory/inventory-add/inventory-add.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
     InventoryComponent,
     PosComponent,
     ReportsComponent,
-    ItemComponent
+    ItemComponent,
+    InventoryAddComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,7 +32,8 @@ import { HttpClientModule } from '@angular/common/http';
       inventory: inventoryReducer
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    HttpClientModule
+    HttpClientModule,
+		ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,29 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+    <li class="breadcrumb-item"><a routerLink="/inventory">Inventory</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Add</li>
+  </ol>
+</nav>
+<br/>
+
+<form>
+	<div class="mb-3">
+		<label class="form-label">Barcode</label>
+		<input type="number" class="form-control" placeholder="Code">
+	</div>
+	<div class="mb-3">
+		<label class="form-label">Name</label>
+		<input type="text" class="form-control" placeholder="Name">
+	</div>
+	<div class="mb-3">
+		<label class="form-label">Price</label>
+		<input type="number" class="form-control" placeholder="Price">
+	</div>
+	<div class="form-floating">
+		<textarea class="form-control" placeholder="Remarks"></textarea>
+		<label for="floatingTextarea">Remarks</label>
+	</div>
+	<br/>
+	<button type="submit" class="btn btn-primary">Submit</button>
+</form>

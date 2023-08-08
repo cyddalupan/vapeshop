@@ -26,18 +26,20 @@ export class PosComponent implements AfterViewInit {
     this.setFocusOnInput();
 
     this.store.dispatch(AddItem({
-      id: 4800488959878,
+      code: 4800488959878,
       name: 'Nursy Wet Wipes',
       price: 133,
+			desc: "random desc",
       created_at: '2012',
       updated_at: '2013',
       deleted_at: null
     }));
 
     this.store.dispatch(AddItem({
-      id: 16000439894,
+      code: 16000439894,
       name: 'Granola Bar',
       price: 321,
+			desc: "another desc",
       created_at: '2012',
       updated_at: '2013',
       deleted_at: null

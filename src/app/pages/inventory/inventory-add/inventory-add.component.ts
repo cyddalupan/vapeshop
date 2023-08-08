@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
+import { Store } from '@ngrx/store';
+import { AddItem }from '../store/inventory.action';
+import { Item } from '../model/store.model';
 
 @Component({
   selector: 'app-inventory-add',
@@ -8,8 +11,21 @@ import { FormGroup, FormControl, Validators } from '@angular/forms'
 })
 export class InventoryAddComponent {
 	public inventoryForm = new FormGroup({
-		code: new FormControl(),
-		name: new FormControl(),
-		price: new FormControl(),
+		code: new FormControl('', [Validators.required]),
+		name: new FormControl('', [Validators.required]),
+		price: new FormControl('', [Validators.required]),
 		desc: new FormControl(),
 	});
+
+	constructor(private store: Store) {}
+
+	public onSubmit() {
+		const item:Item = {
+			code: Number(this.inventoryForm.get('code')!.value),
+			name: String(this.inventoryForm.get('name')!.value),
+			price: Number(this.inventoryForm.get('price')!.value),
+			desc: String(this.inventoryForm.get('desc')!.value),
+		};		
+		this.store.dispatch(AddItem(item));	
+	}
+}

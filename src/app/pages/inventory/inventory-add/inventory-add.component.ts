@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
+
 import { AddItem }from '../store/inventory.action';
 import { Item } from '../model/store.model';
 
@@ -17,7 +19,10 @@ export class InventoryAddComponent {
 		desc: new FormControl(),
 	});
 
-	constructor(private store: Store) {}
+	constructor(
+		private store: Store,
+		private router: Router,
+	) {}
 
 	public onSubmit() {
 		const item:Item = {
@@ -27,5 +32,6 @@ export class InventoryAddComponent {
 			desc: String(this.inventoryForm.get('desc')!.value),
 		};		
 		this.store.dispatch(AddItem(item));	
+		this.router.navigate(['/inventory']);
 	}
 }

@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+import { selectAllItems, selectItemTotal } from './store/inventory.selector';
 
 @Component({
   selector: 'app-inventory',
@@ -6,5 +9,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./inventory.component.css']
 })
 export class InventoryComponent {
+	items$ =  this.store.select(selectAllItems);
 
+	constructor(
+		private store:Store
+	) { }
 }

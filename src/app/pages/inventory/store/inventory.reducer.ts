@@ -17,9 +17,14 @@ export const inventoryReducer = createReducer(
   initialState,
   on(SetItem, (state, { itemId }) => ({...state, selectedItemId: itemId})),
   on(AddItem, (state, { item }) => {
+		if (!(item.id))
+			item = {...item, id: Number(Date.now())};
     return adapter.addOne(item, state)
   }),
 )
+
+export const getSelectedItemId = (state: State) => state.selectedItemId;
+
 const {
   selectIds,
   selectEntities,
@@ -27,6 +32,10 @@ const {
   selectTotal,
 } = adapter.getSelectors();
 
-export const getSelectedItemId = (state: State) => state.selectedItemId;
+export const selectItemIds = selectIds;
 
 export const selectItemEntities = selectEntities;
+
+export const selectAllItems = selectAll;
+
+export const selectItemTotal = selectTotal;

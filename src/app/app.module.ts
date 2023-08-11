@@ -14,6 +14,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { inventoryReducer } from './pages/inventory/store/inventory.reducer';
 import { ItemComponent } from './pages/pos/item/item.component';
 import { InventoryAddComponent } from './pages/inventory/inventory-add/inventory-add.component';
+import { InventoryEditComponent } from './pages/inventory/inventory-edit/inventory-edit.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { InventoryAddComponent } from './pages/inventory/inventory-add/inventory
     ReportsComponent,
     ItemComponent,
     InventoryAddComponent,
+    InventoryEditComponent,
   ],
   imports: [
     BrowserModule,

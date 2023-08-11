@@ -6,6 +6,7 @@ import { PosComponent } from './pages/pos/pos.component';
 import { ReportsComponent } from './pages/reports/reports.component';
 import { ItemComponent } from './pages/pos/item/item.component';
 import { InventoryAddComponent } from './pages/inventory/inventory-add/inventory-add.component';
+import { InventoryEditComponent } from './pages/inventory/inventory-edit/inventory-edit.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
 	// Inventory
   { path: 'inventory', component: InventoryComponent },
   { path: 'inventory-add', component: InventoryAddComponent },
+  { path: 'inventory-edit/:id', component: InventoryEditComponent },
 
   // POS
   { path: 'pos', component: PosComponent },

@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { EntityAdapter, EntityState, createEntityAdapter } from "@ngrx/entity";
-import { AddItem, SetItem, updateItem } from "./inventory.action";
+import { AddItem, InitializeItem, SetItem, updateItem } from "./inventory.action";
 import { Item } from "../model/store.model";
 
 export interface State extends EntityState<Item> {
@@ -15,6 +15,9 @@ export const initialState: State = adapter.getInitialState({
 
 export const inventoryReducer = createReducer(
   initialState,
+  on(InitializeItem, (state, { localStorage }) => {
+    return localStorage;
+  }),
   on(SetItem, (state, { itemId }) => ({...state, selectedItemId: itemId})),
   on(AddItem, (state, { item }) => {
     return adapter.addOne(item, state)

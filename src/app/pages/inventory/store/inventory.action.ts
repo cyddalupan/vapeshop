@@ -4,6 +4,7 @@ import { Item } from "../model/store.model";
 export enum ItemActions {
   AddItem = '[Item] Add Item',
   SetItem = '[Item] Set Item',
+  UpdateItem = '[Item] Update Item',
 }
 
 export const AddItem = createAction(
@@ -13,5 +14,10 @@ export const AddItem = createAction(
 
 export const SetItem = createAction(
   ItemActions.SetItem,
-  (itemId: number) => ({ itemId })
+  (itemId: any) => ({ itemId })
+);
+
+export const updateItem = createAction(
+  ItemActions.UpdateItem,
+  (item: Item) => ({ item })
 );

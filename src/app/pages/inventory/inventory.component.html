@@ -20,6 +20,7 @@
 				<th scope="col">Price</th>
 				<th scope="col">Remarks</th>
 				<th scope="col"></th>
+				<th scope="col"></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -30,6 +31,9 @@
 				<td>{{ item.desc }}</td>
 				<td role="button" routerLink="/inventory-edit/{{ item.id }}">
 					<i class="bi bi-pencil-square"></i>
+				</td>
+				<td role="button" class="text-danger">
+					<i class="bi bi-trash3"></i>
 				</td>
 			</tr>
 		</tbody>

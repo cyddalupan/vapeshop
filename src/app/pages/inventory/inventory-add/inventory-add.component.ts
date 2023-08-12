@@ -26,6 +26,7 @@ export class InventoryAddComponent {
 
 	public onSubmit() {
 		const item:Item = {
+			id: Number(Date.now()),
 			code: Number(this.inventoryForm.get('code')!.value),
 			name: String(this.inventoryForm.get('name')!.value),
 			price: Number(this.inventoryForm.get('price')!.value),

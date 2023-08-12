@@ -5,6 +5,7 @@ export enum ItemActions {
   AddItem = '[Item] Add Item',
   SetItem = '[Item] Set Item',
   UpdateItem = '[Item] Update Item',
+  DeleteItem = '[Item] Delete Item',
 }
 
 export const AddItem = createAction(
@@ -14,7 +15,7 @@ export const AddItem = createAction(
 
 export const SetItem = createAction(
   ItemActions.SetItem,
-  (itemId: any) => ({ itemId })
+  (itemId: number) => ({ itemId })
 );
 
 export const updateItem = createAction(

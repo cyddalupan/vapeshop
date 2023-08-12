@@ -20,8 +20,6 @@ export const inventoryReducer = createReducer(
     return adapter.addOne(item, state)
   }),
   on(updateItem, (state, { item }) => {
-    console.log("updating", item);
-    //return state;
     return adapter.setOne(item, state);
   }),
 )

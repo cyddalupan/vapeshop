@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 
 import { updateItem } from './store/inventory.action';
 import { selectAllItems } from './store/inventory.selector';
-import { Item } from './model/store.model';
+import { Crud, Item } from './model/store.model';
 import { map } from 'rxjs';
 
 @Component({
@@ -12,7 +12,7 @@ import { map } from 'rxjs';
   styleUrls: ['./inventory.component.css']
 })
 export class InventoryComponent {
-	items$ =  this.store.select(selectAllItems).pipe(
+	items$ = this.store.select(selectAllItems).pipe(
 		map(item => item.filter(data => !data.deleted_at))
 	);
 
@@ -24,6 +24,7 @@ export class InventoryComponent {
 		if (confirm('Are you sure you want to delete?')) {
       this.store.dispatch(updateItem({
 				...item,
+				crud: Crud.DELETE,
 				backup: false,
 				deleted_at: String(Date.now()),
 			}))

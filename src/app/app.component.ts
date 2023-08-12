@@ -3,6 +3,7 @@ import { UserService } from './service/user.service';
 import { take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { InitializeItem } from './pages/inventory/store/inventory.action';
+import { InventoryService } from './service/inventory.service';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   constructor(
     private store: Store,
     private userService: UserService,
+    private inventoryService: InventoryService,
   ) { }
 
   ngOnInit(): void {
@@ -50,6 +52,10 @@ export class AppComponent implements OnInit, AfterViewInit {
       console.log("after logout");
       console.log("logout data", data);
     });
+  }
+
+  backup() {
+    this.inventoryService.cloudbackup();
   }
 
   private saveStateToLocalStorage(state: any): void {

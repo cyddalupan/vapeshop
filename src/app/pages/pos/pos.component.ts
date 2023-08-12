@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AddItem, SetItem } from '../inventory/store/inventory.action';
+import { SetItem } from '../inventory/store/inventory.action';
 import { selectCurrentItem } from '../inventory/store/inventory.selector';
 import { pipe, take } from 'rxjs';
 
@@ -24,28 +24,6 @@ export class PosComponent implements AfterViewInit {
   ngAfterViewInit() {
     // Set focus on the input element after the view has been initialized
     this.setFocusOnInput();
-
-    this.store.dispatch(AddItem({
-      id: 111,
-      code: 4800488959878,
-      name: 'Nursy Wet Wipes',
-      price: 133,
-			desc: "random desc",
-      created_at: '2012',
-      updated_at: '2013',
-      deleted_at: null
-    }));
-
-    this.store.dispatch(AddItem({
-      id: 222,
-      code: 16000439894,
-      name: 'Granola Bar',
-      price: 321,
-			desc: "another desc",
-      created_at: '2012',
-      updated_at: '2013',
-      deleted_at: null
-    }));
   }
   
   onBarcodeScanned(event: KeyboardEvent) {

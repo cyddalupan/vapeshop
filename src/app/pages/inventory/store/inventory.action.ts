@@ -14,17 +14,22 @@ export const InitializeItem = createAction(
   (localStorage: any) => ({ localStorage })
 );
 
-export const AddItem = createAction(
-  ItemActions.AddItem,
-  (item: Item) => ({ item })
-);
-
 export const SetItem = createAction(
   ItemActions.SetItem,
   (itemId: number) => ({ itemId })
 );
 
+export const AddItem = createAction(
+  ItemActions.AddItem,
+  (item: Item) => ({ item })
+);
+
 export const updateItem = createAction(
   ItemActions.UpdateItem,
   (item: Item) => ({ item })
+);
+
+export const deleteItem = createAction(
+  ItemActions.DeleteItem,
+  (itemId: number) => ({ itemId })
 );

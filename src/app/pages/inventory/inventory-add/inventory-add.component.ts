@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 
 import { AddItem }from '../store/inventory.action';
-import { Crud, Item } from '../model/store.model';
+import { Item } from '../model/store.model';
 
 @Component({
   selector: 'app-inventory-add',
@@ -31,7 +31,6 @@ export class InventoryAddComponent {
 			name: String(this.inventoryForm.get('name')!.value),
 			price: Number(this.inventoryForm.get('price')!.value),
 			desc: String(this.inventoryForm.get('desc')!.value),
-			crud: Crud.ADD
 		};		
 		this.store.dispatch(AddItem(item));	
 		this.router.navigate(['/inventory']);

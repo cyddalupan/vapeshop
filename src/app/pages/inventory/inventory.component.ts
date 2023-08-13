@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 
 import { updateItem } from './store/inventory.action';
 import { selectAllItems } from './store/inventory.selector';
-import { Crud, Item } from './model/store.model';
+import { Item } from './model/store.model';
 import { map } from 'rxjs';
 
 @Component({
@@ -22,11 +22,13 @@ export class InventoryComponent {
 
 	deleteItem(item: Item) {
 		if (confirm('Are you sure you want to delete?')) {
+			const currentDate = new Date();
+			const formattedDate = currentDate.toISOString().split('T')[0];
+
       this.store.dispatch(updateItem({
 				...item,
-				crud: Crud.DELETE,
 				backup: false,
-				deleted_at: String(Date.now()),
+				deleted_at: formattedDate,
 			}))
     }
 	}

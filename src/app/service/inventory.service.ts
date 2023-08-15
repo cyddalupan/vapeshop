@@ -55,6 +55,8 @@ export class InventoryService {
           // Trigger again.
           this.cloudbackup();
         });
+      } else {
+        this.fetchCloudData();
       }
     });
   }
@@ -65,5 +67,17 @@ export class InventoryService {
 
   editInventory(id:number, item: Item) {
     return this.http.put<any>(this.mainURL+"inventory/"+id+"/", item, httpOptions);
+  }
+
+  fetchCloudData() {
+    this.http.get<any[]>(this.mainURL+"inventory/").pipe(take(1)).subscribe(items => {
+      items.filter(item => !item.deleted_at).map(liveItem => {
+        // delete store data.  
+        this.store.dispatch(deleteItem(liveItem.id));	
+
+        // add store data.
+        this.store.dispatch(AddItem({...liveItem, backup: true}));
+      });
+    });
   }
 }

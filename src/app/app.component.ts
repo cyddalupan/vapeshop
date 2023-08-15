@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { UserService } from './service/user.service';
-import { take } from 'rxjs';
+import { filter, map, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { InitializeItem } from './pages/inventory/store/inventory.action';
 import { InventoryService } from './service/inventory.service';
+import { selectAllItems } from './pages/inventory/store/inventory.selector';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,10 @@ import { InventoryService } from './service/inventory.service';
 })
 export class AppComponent implements OnInit, AfterViewInit {
   title = 'vapeshop';
+
+  unsyncItem$ = this.store.select(selectAllItems).pipe(
+    map(items => (items.filter(item => item.backup !== true)))
+  );
 
   constructor(
     private store: Store,

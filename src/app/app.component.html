@@ -6,7 +6,7 @@
     <div class="d-flex">
       <button type="button" class="btn btn-warning" (click)="backup()">
         <i class="bi bi-cloud-check-fill"></i>
-        Sync to Cloud (99+ data to sync)
+        Sync to Cloud ({{ (unsyncItem$ | async)?.length }} data to sync)
       </button>
     </div>
   </div>

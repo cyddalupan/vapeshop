@@ -4,10 +4,21 @@
       <img src="./assets/img/logo-clean.png" class="img-fluid" style="width:100px">
     </a>
     <div class="d-flex">
-      <button type="button" class="btn btn-warning" (click)="backup()">
+      <button *ngIf="isOnline"
+        type="button"
+        class="btn"
+        [ngClass]="{
+          'btn-primary': (unsyncItemCount <= 10),
+          'btn-warning': (unsyncItemCount > 10 && unsyncItemCount <= 99),
+          'btn-danger': (unsyncItemCount > 99)
+        }"
+        (click)="backup()">
         <i class="bi bi-cloud-check-fill"></i>
-        Sync to Cloud ({{ (unsyncItem$ | async)?.length }} data to sync)
+        Sync to Cloud ({{ unsyncItemCount }} data to sync)
       </button>
+      <div *ngIf="!isOnline" class="fw-bold text-secondary">
+        You Are Currently Offline
+      </div>
     </div>
   </div>
 </nav>

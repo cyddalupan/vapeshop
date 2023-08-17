@@ -13,6 +13,8 @@ import { selectAllItems } from './pages/inventory/store/inventory.selector';
 })
 export class AppComponent implements OnInit, AfterViewInit {
   title = 'vapeshop';
+  isOnline = navigator.onLine;
+  unsyncItemCount = 0;
 
   unsyncItem$ = this.store.select(selectAllItems).pipe(
     map(items => (items.filter(item => item.backup !== true)))
@@ -43,6 +45,18 @@ export class AppComponent implements OnInit, AfterViewInit {
         console.log("correct login");
         console.log("login data",data);
       }
+    });
+
+    this.unsyncItem$.subscribe(data => {
+      this.unsyncItemCount = data.length;
+    });
+    
+    window.addEventListener('online', () => {
+      this.isOnline = true;
+    });
+    
+    window.addEventListener('offline', () => {
+      this.isOnline = false;
     });
   }
 

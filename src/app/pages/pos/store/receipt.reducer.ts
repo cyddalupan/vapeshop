@@ -6,7 +6,7 @@ import * as ReceiptActions from './receipt.actions';
 
 export interface State extends EntityState<Receipt> {
   // additional entities state properties
-  selectedReceiptId: string | null;
+  selectedReceiptId: number | null;
 }
  
 export const adapter: EntityAdapter<Receipt> = createEntityAdapter<Receipt>();
@@ -18,6 +18,7 @@ export const initialState: State = adapter.getInitialState({
  
 export const receiptReducer = createReducer(
   initialState,
+  on(ReceiptActions.setSelectedReceipt, (state, { id }) => ({...state, selectedReceiptId: id})),
   on(ReceiptActions.addReceipt, (state, { receipt }) => {
     return adapter.addOne(receipt, state)
   }),

@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { Update, EntityMap, EntityMapOne, Predicate } from '@ngrx/entity';
 import { Receipt } from '../models';
 
+export const setSelectedReceipt = createAction('[Receipt/API] Set Selected Receipt', props<{ id: number }>());
 export const loadReceipts = createAction('[Receipt/API] Load Receipts', props<{ receipts: Receipt[] }>());
 export const setReceipts = createAction('[Receipt/API] Set Receipts', props<{ receipts: Receipt[] }>());
 export const addReceipt = createAction('[Receipt/API] Add Receipt', props<{ receipt: Receipt }>());

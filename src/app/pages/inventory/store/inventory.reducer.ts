@@ -1,7 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
 import { EntityAdapter, EntityState, createEntityAdapter } from "@ngrx/entity";
 import { AddItem, InitializeItem, SetItem, deleteItem, updateItem } from "./inventory.action";
-import { Item } from "../model/store.model";
+import { Item } from "../models";
 
 export interface State extends EntityState<Item> {
   selectedItemId: number;

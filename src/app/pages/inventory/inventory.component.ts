@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 
 import { updateItem } from './store/inventory.action';
 import { selectAllItems } from './store/inventory.selector';
-import { Item } from './model/store.model';
+import { Item } from './models';
 import { map } from 'rxjs';
 
 @Component({

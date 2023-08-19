@@ -1,5 +1,5 @@
 import { createAction } from "@ngrx/store";
-import { Item } from "../model/store.model";
+import { Item } from "../models";
 
 export enum ItemActions {
   InitItem = '[Item] Initialize Item',

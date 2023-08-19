@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { environment } from 'src/environment/environment';
-import { Item } from '../pages/inventory/model/store.model';
+import { Item } from '../pages/inventory/models';
 import { Observable, catchError, map, take, throwError } from 'rxjs';
 import { selectAllItems } from '../pages/inventory/store/inventory.selector';
 import { AddItem, deleteItem } from '../pages/inventory/store/inventory.action';

@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 
 import { AddItem }from '../store/inventory.action';
-import { Item } from '../model/store.model';
+import { Item } from '../models';
 
 @Component({
   selector: 'app-inventory-add',

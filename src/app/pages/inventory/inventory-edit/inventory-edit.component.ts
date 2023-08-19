@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { SetItem, updateItem } from '../store/inventory.action';
 import { selectCurrentItem } from '../store/inventory.selector';
 import { take } from 'rxjs';
-import { Item } from '../model/store.model';
+import { Item } from '../models';
 
 @Component({
   selector: 'app-inventory-edit',

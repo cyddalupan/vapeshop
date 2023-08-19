@@ -4,7 +4,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { InventoryComponent } from './pages/inventory/inventory.component';
 import { PosComponent } from './pages/pos/pos.component';
 import { ReportsComponent } from './pages/reports/reports.component';
-import { ItemComponent } from './pages/pos/item/item.component';
+import { ItemComponent } from './pages/pos/receipt/item/item.component';
 import { InventoryAddComponent } from './pages/inventory/inventory-add/inventory-add.component';
 import { InventoryEditComponent } from './pages/inventory/inventory-edit/inventory-edit.component';
 

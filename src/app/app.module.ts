@@ -12,9 +12,10 @@ import { ReportsComponent } from './pages/reports/reports.component';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { inventoryReducer } from './pages/inventory/store/inventory.reducer';
-import { ItemComponent } from './pages/pos/item/item.component';
+import { ItemComponent } from './pages/pos/receipt/item/item.component';
 import { InventoryAddComponent } from './pages/inventory/inventory-add/inventory-add.component';
 import { InventoryEditComponent } from './pages/inventory/inventory-edit/inventory-edit.component';
+import { ReceiptComponent } from './pages/pos/receipt/receipt.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { InventoryEditComponent } from './pages/inventory/inventory-edit/invento
     ItemComponent,
     InventoryAddComponent,
     InventoryEditComponent,
+    ReceiptComponent,
   ],
   imports: [
     BrowserModule,

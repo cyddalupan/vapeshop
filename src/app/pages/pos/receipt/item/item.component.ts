@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectCurrentItem } from '../../inventory/store/inventory.selector';
+import { selectCurrentItem } from '../../../inventory/store/inventory.selector';
 import { take } from 'rxjs';
 
 @Component({

@@ -16,6 +16,7 @@ import { ItemComponent } from './pages/pos/receipt/item/item.component';
 import { InventoryAddComponent } from './pages/inventory/inventory-add/inventory-add.component';
 import { InventoryEditComponent } from './pages/inventory/inventory-edit/inventory-edit.component';
 import { ReceiptComponent } from './pages/pos/receipt/receipt.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { ReceiptComponent } from './pages/pos/receipt/receipt.component';
     HttpClientModule,
 		ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

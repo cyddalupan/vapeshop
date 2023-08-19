@@ -5,4 +5,16 @@
   </ol>
 </nav>
 
-<p>receipt works!</p>
+<div class="text-center fs-1">
+  <form [formGroup]="receiptForm" (ngSubmit)="onSubmit()">
+    <div class="mb-4">Customer</div>
+    <div class="fs-1">
+      <i class="bi bi-person-workspace me-2"></i>
+       <input type="text" formControlName="customer">
+    </div>
+    <div *ngIf="receiptForm.get('customer')?.hasError('required') && receiptForm.get('customer')?.touched" class="text-danger fs-4">
+      Customer Name is Required.
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg mt-3 px-3" [disabled]="receiptForm.invalid">Submit</button>
+  </form>
+</div>

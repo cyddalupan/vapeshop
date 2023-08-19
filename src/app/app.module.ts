@@ -36,7 +36,7 @@ import { receiptReducer } from './pages/pos/store/receipt.reducer';
     AppRoutingModule,
     StoreModule.forRoot({
       inventory: inventoryReducer,
-      receipt: receiptReducer
+      receipts: receiptReducer
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     HttpClientModule,

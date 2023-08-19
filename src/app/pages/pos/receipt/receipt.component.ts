@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { take } from 'rxjs';
 import { SetItem } from '../../inventory/store/inventory.action';
 import { selectCurrentItem } from '../../inventory/store/inventory.selector';
+import { selectCurrentReceipt } from '../store/receipt.selector';
 
 @Component({
   selector: 'app-receipt',
@@ -11,6 +12,7 @@ import { selectCurrentItem } from '../../inventory/store/inventory.selector';
   styleUrls: ['./receipt.component.css']
 })
 export class ReceiptComponent implements AfterViewInit {
+  receipt$ = this.store.select(selectCurrentReceipt);
 
   public detectedItem = '';
 

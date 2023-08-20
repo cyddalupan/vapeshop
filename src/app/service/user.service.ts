@@ -29,11 +29,16 @@ export class UserService {
 
   public login(): Observable<any>
   {
+		const loginHttpOptions = {
+				headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+			})
+		};
     const data = {
       username: 'cyddalupan',
       password: 'limangminutolangsapatna',
     };
-    return this.http.post<any>(this.mainURL+"login/", data, httpOptions);
+    return this.http.post<any>(this.mainURL+"login/", data, loginHttpOptions);
   }
 
   public logout(): Observable<any>

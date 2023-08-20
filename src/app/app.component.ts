@@ -28,7 +28,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     const local = JSON.parse(String(localStorage.getItem('app')));
-    this.store.dispatch(InitializeItem(local.inventory));
+		if (local?.inventory)
+			this.store.dispatch(InitializeItem(local.inventory));
 
     this.userService.getLoginStatus().pipe(take(1)).subscribe(data => {
       console.log("check login stat");

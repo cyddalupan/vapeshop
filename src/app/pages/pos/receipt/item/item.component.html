@@ -1,12 +1,12 @@
 <div class="text-end">
-  <a routerLink="/pos" class="fs-1">
+  <a routerLink="/receipt" class="fs-1">
      <i class="bi bi-x"></i>
   </a>
 </div>
 
 <div class="text-center">
   <h1>
-    {{ itemName }}
+    {{ item.name }}
   </h1>
   <div class="row">
     <div class="col-md-3"></div>
@@ -29,7 +29,7 @@
         </div>
         <div class="row">
           <div class="col-md-3">
-            <a routerLink="/pos" class="fs-1">
+            <a routerLink="/receipt" class="fs-1">
               <button type="button" class="btn btn-danger btn-lg">Cancel</button>
             </a>
           </div>

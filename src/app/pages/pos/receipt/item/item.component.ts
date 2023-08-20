@@ -3,6 +3,11 @@ import { Store } from '@ngrx/store';
 import { selectCurrentItem } from '../../../inventory/store/inventory.selector';
 import { take } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Order, Receipt } from '../../models';
+import { selectCurrentReceipt } from '../../store/receipt.selector';
+import { Item } from 'src/app/pages/inventory/models';
+import { addOrder } from '../../store/order.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-item',
@@ -15,21 +20,25 @@ export class ItemComponent implements OnInit, AfterViewInit {
 		quantity: new FormControl(1, [Validators.required]),
 	});
 
-  public itemName = "";
-	public price = 0;
+  public receipt = {} as Receipt;
+  public item = {} as Item;
 
   constructor(
+    private router: Router,
     private store: Store,
     private elementRef: ElementRef,
     private renderer: Renderer2,
   ) { }
 
   ngOnInit(): void {
+    this.store.select(selectCurrentReceipt).pipe(take(1)).subscribe(receipt => {
+      if (receipt)
+        this.receipt = receipt;
+    });
     this.store.select(selectCurrentItem).pipe(take(1)).subscribe(item => {
       if (item) {
-        this.itemName = item.name;
-        this.price = item.price;
-        this.orderForm.get("price")?.setValue(this.price);
+        this.item = item;
+        this.orderForm.get("price")?.setValue(this.item.price);
       }
     });
   }
@@ -40,7 +49,16 @@ export class ItemComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-    console.log("SUBMIT")
+    const currentId = Number(Date.now());
+		const order: Order = {
+			id: currentId,
+      receipt_id: this.receipt.id,
+      item_id: this.item.id,
+      quantity: Number(this.orderForm.get('quantity')!.value),
+      price: Number(this.orderForm.get('price')!.value)
+		};
+		this.store.dispatch(addOrder({ order: order }));
+		this.router.navigate(['/receipt']);
   }
 
   private setFocusOnInput() {

@@ -18,6 +18,7 @@ import { InventoryEditComponent } from './pages/inventory/inventory-edit/invento
 import { ReceiptComponent } from './pages/pos/receipt/receipt.component';
 import { DatePipe } from '@angular/common';
 import { receiptReducer } from './pages/pos/store/receipt.reducer';
+import { orderReducer } from './pages/pos/store/order.reducer';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { receiptReducer } from './pages/pos/store/receipt.reducer';
     AppRoutingModule,
     StoreModule.forRoot({
       inventory: inventoryReducer,
-      receipts: receiptReducer
+      receipts: receiptReducer,
+      orders: orderReducer
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     HttpClientModule,

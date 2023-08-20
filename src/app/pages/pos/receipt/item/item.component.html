@@ -11,14 +11,21 @@
   <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6">
-      <form (ngSubmit)="onSubmit()">
+      <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
         <div class="input-group input-group-lg mb-3">
           <span class="input-group-text">Price</span>
-          <input type="text" class="form-control" value="{{ price }}" aria-label="Quantity">
+          <input type="text" class="form-control" formControlName="price" aria-label="Price">
+          <div *ngIf="orderForm.get('price')?.hasError('required') && orderForm.get('price')?.touched" class="text-danger container-fluid">
+            Price is Required.			
+          </div>
         </div>
         <div class="input-group input-group-lg mb-3">
           <span class="input-group-text">Quantity</span>
-          <input id="quantity" type="text" class="form-control" value="1" aria-label="Quantity" #quantityInput autofocus>
+          <input id="quantity" type="text" class="form-control" formControlName="quantity" aria-label="Quantity" #quantityInput autofocus>
+          <br/>
+          <div *ngIf="orderForm.get('quantity')?.hasError('required') && orderForm.get('quantity')?.touched" class="text-danger container-fluid">
+            Quantity is Required.			
+          </div>
         </div>
         <div class="row">
           <div class="col-md-3">
@@ -28,7 +35,7 @@
           </div>
           <div class="col-md-6"></div>
           <div class="col-md-3">
-            <button type="submit" class="btn btn-primary btn-lg">Add</button>
+            <button type="submit" class="btn btn-primary btn-lg" [disabled]="orderForm.invalid">Add</button>
           </div>
         </div>
       </form>

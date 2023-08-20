@@ -1,0 +1,20 @@
+import { createAction, props } from '@ngrx/store';
+import { Update, EntityMap, EntityMapOne, Predicate } from '@ngrx/entity';
+import { Order } from '../models';
+
+export const setSelectedOrder = createAction('[Order/API] Set Selected Order', props<{ id: number }>());
+export const loadOrders = createAction('[Order/API] Load Orders', props<{ orders: Order[] }>());
+export const setOrders = createAction('[Order/API] Set Orders', props<{ orders: Order[] }>());
+export const addOrder = createAction('[Order/API] Add Order', props<{ order: Order }>());
+export const setOrder = createAction('[Order/API] Set Order', props<{ order: Order }>());
+export const upsertOrder = createAction('[Order/API] Upsert Order', props<{ order: Order }>());
+export const addOrders = createAction('[Order/API] Add Orders', props<{ orders: Order[] }>());
+export const upsertOrders = createAction('[Order/API] Upsert Orders', props<{ orders: Order[] }>());
+export const updateOrder = createAction('[Order/API] Update Order', props<{ update: Update<Order> }>());
+export const updateOrders = createAction('[Order/API] Update Orders', props<{ updates: Update<Order>[] }>());
+export const mapOrder = createAction('[Order/API] Map Order', props<{ entityMap: EntityMapOne<Order> }>());
+export const mapOrders = createAction('[Order/API] Map Orders', props<{ entityMap: EntityMap<Order> }>());
+export const deleteOrder = createAction('[Order/API] Delete Order', props<{ id: string }>());
+export const deleteOrders = createAction('[Order/API] Delete Orders', props<{ ids: string[] }>());
+export const deleteOrdersByPredicate = createAction('[Order/API] Delete Orders By Predicate', props<{ predicate: Predicate<Order> }>());
+export const clearOrders = createAction('[Order/API] Clear Orders');

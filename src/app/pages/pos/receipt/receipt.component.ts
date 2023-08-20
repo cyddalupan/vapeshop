@@ -32,7 +32,7 @@ export class ReceiptComponent implements AfterViewInit {
     private elementRef: ElementRef,
     private renderer: Renderer2
   ) {
-    this.inputSubject.pipe(takeUntil(this.unsubscribe$), debounceTime(2000)).subscribe(value => {
+    this.inputSubject.pipe(takeUntil(this.unsubscribe$), debounceTime(900)).subscribe(value => {
       if (this.activeItem) {
         this.store.dispatch(SetItem(this.activeItem.id));
         this.router.navigateByUrl('/item');
@@ -60,20 +60,6 @@ export class ReceiptComponent implements AfterViewInit {
         this.detectedItem = 'Item does not exist';
       }
     });
-
-    // const scannedData = Number((event.target as HTMLInputElement).value);
-
-    // this.store.dispatch(SetItem(scannedData));
-    // this.store.select(selectCurrentItem).pipe(take(1)).subscribe(item => {
-    //   if (item) {
-    //     this.detectedItem = item.name;
-    //     setTimeout(() => {
-    //       this.router.navigateByUrl('/item');
-    //     }, 500);
-    //    } 
-    //   else
-    //     this.detectedItem = 'Item does not exist';
-    // });
   }
   
   private setFocusOnInput() {

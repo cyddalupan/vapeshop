@@ -11,25 +11,27 @@
   <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6">
-			<div class="input-group input-group-lg mb-3">
-        <span class="input-group-text">Price</span>
-        <input type="text" class="form-control" value="{{ price }}" aria-label="Quantity">
-      </div>
-      <div class="input-group input-group-lg mb-3">
-        <span class="input-group-text">Quantity</span>
-        <input type="text" class="form-control" value="1" aria-label="Quantity">
-      </div>
-      <div class="row">
-        <div class="col-md-3">
-          <a routerLink="/pos" class="fs-1">
-            <button type="button" class="btn btn-danger btn-lg">Cancel</button>
-          </a>
+      <form (ngSubmit)="onSubmit()">
+        <div class="input-group input-group-lg mb-3">
+          <span class="input-group-text">Price</span>
+          <input type="text" class="form-control" value="{{ price }}" aria-label="Quantity">
         </div>
-        <div class="col-md-6"></div>
-        <div class="col-md-3">
-          <button type="button" class="btn btn-primary btn-lg">Add</button>
+        <div class="input-group input-group-lg mb-3">
+          <span class="input-group-text">Quantity</span>
+          <input id="quantity" type="text" class="form-control" value="1" aria-label="Quantity" #quantityInput autofocus>
         </div>
-      </div>
+        <div class="row">
+          <div class="col-md-3">
+            <a routerLink="/pos" class="fs-1">
+              <button type="button" class="btn btn-danger btn-lg">Cancel</button>
+            </a>
+          </div>
+          <div class="col-md-6"></div>
+          <div class="col-md-3">
+            <button type="submit" class="btn btn-primary btn-lg">Add</button>
+          </div>
+        </div>
+      </form>
     </div>
     <div class="col-md-3"></div>
   </div>

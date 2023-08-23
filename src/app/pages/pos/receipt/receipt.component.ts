@@ -6,6 +6,7 @@ import { SetItem } from '../../inventory/store/inventory.action';
 import { selectAllItems, selectCurrentItem } from '../../inventory/store/inventory.selector';
 import { selectCurrentReceipt } from '../store/receipt.selector';
 import { Item } from '../../inventory/models';
+import { selectAllOrders } from '../store/order.selector';
 
 @Component({
   selector: 'app-receipt',
@@ -17,6 +18,8 @@ export class ReceiptComponent implements AfterViewInit {
   private inputSubject = new Subject<string>();
 
   activeItem: Item | null = null;
+
+  orders$ = this.store.select(selectAllOrders);
 
 	items$ = this.store.select(selectAllItems).pipe(
 		map(item => item.filter(data => !data.deleted_at))

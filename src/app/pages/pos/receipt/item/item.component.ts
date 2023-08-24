@@ -57,6 +57,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
       quantity: Number(this.orderForm.get('quantity')!.value),
       price: Number(this.orderForm.get('price')!.value),
       backup: false,
+      deleted_at: null,
 		};
 		this.store.dispatch(addOrder({ order: order }));
 		this.router.navigate(['/receipt']);

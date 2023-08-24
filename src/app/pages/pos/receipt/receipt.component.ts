@@ -8,6 +8,8 @@ import { selectCurrentReceipt } from '../store/receipt.selector';
 import { Item } from '../../inventory/models';
 import { selectAllOrders } from '../store/order.selector';
 import { setReceipt } from '../store/receipt.actions';
+import { Order } from '../models';
+import { setOrder, setSelectedOrder, updateOrder } from '../store/order.actions';
 
 @Component({
   selector: 'app-receipt',
@@ -19,8 +21,11 @@ export class ReceiptComponent implements AfterViewInit {
   private inputSubject = new Subject<string>();
 
   activeItem: Item | null = null;
+  items: Item[] = [];
 
-  orders$ = this.store.select(selectAllOrders);
+  orders$ = this.store.select(selectAllOrders).pipe(
+		map(order => order.filter(data => !data.deleted_at))
+	);
 
 	items$ = this.store.select(selectAllItems).pipe(
 		map(item => item.filter(data => !data.deleted_at))
@@ -51,6 +56,10 @@ export class ReceiptComponent implements AfterViewInit {
         this.router.navigateByUrl('/item');
       }
     });
+
+    this.items$.pipe(take(1)).subscribe(items => {
+      this.items = items;
+    });
   }
 
   ngAfterViewInit() {
@@ -74,6 +83,28 @@ export class ReceiptComponent implements AfterViewInit {
       }
     });
   }
+
+  itemNameById(id: number) {
+    const matchId = this.items.filter(item => item.id === id);
+    if (matchId) {
+      return matchId[0].name;
+    }
+    return "Item not found";
+  }
+
+  deleteOrder(order: Order) {
+		if (confirm('Are you sure you want to order?')) {
+			const currentDate = new Date();
+			const formattedDate = currentDate.toISOString().split('T')[0];
+
+      this.store.dispatch(setSelectedOrder({id: order.id}));
+      this.store.dispatch(setOrder({order: {
+				...order,
+				backup: false,
+				deleted_at: formattedDate,
+			}}))
+    }
+	}
   
   private setFocusOnInput() {
     // Find the input element by its selector (modify this selector according to your HTML structure)

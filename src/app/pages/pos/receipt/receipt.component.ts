@@ -1,12 +1,13 @@
 import { AfterViewInit, Component, ElementRef, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subject, debounceTime, map, take, takeUntil } from 'rxjs';
+import { Subject, combineLatest, debounceTime, map, take, takeUntil } from 'rxjs';
 import { SetItem } from '../../inventory/store/inventory.action';
-import { selectAllItems, selectCurrentItem } from '../../inventory/store/inventory.selector';
+import { selectAllItems } from '../../inventory/store/inventory.selector';
 import { selectCurrentReceipt } from '../store/receipt.selector';
 import { Item } from '../../inventory/models';
 import { selectAllOrders } from '../store/order.selector';
+import { setReceipt } from '../store/receipt.actions';
 
 @Component({
   selector: 'app-receipt',
@@ -26,6 +27,15 @@ export class ReceiptComponent implements AfterViewInit {
 	);
 
   receipt$ = this.store.select(selectCurrentReceipt);
+
+  totalCost$ = this.orders$.pipe(
+    map(orders => {
+      return orders
+        .map(order => (order?.price * order?.quantity))
+        .reduce((accumulator, currentValue) => 
+          accumulator + currentValue, 0);
+    })
+  );
 
   public detectedItem = '';
 

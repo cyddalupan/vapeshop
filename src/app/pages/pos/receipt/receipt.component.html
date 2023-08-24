@@ -21,7 +21,7 @@
 <div *ngIf="(receipt$ | async) as receipt" class="table-responsive">
    <h2>Customer: {{ receipt.customer }}</h2>
    <table class="table">
-      <caption>Total: {{ receipt.total }}</caption>
+      <caption>Total: {{ totalCost$ | async }}</caption>
       <thead>
          <tr>
             <th scope="col">Name</th>

@@ -2,7 +2,7 @@ export interface Receipt {
   id: number;
   customer: string;
   total: number;
-	backup?: boolean;
+	backup: boolean;
 }
 
 export interface Order {
@@ -11,4 +11,5 @@ export interface Order {
   item_id: number;
   quantity: number;
   price: number;
+	backup: boolean;
 }

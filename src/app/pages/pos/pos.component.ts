@@ -40,6 +40,7 @@ export class PosComponent implements OnInit {
 			id: currentId,
 			customer: String(this.receiptForm.get('customer')!.value),
       total: 0,
+      backup: false,
 		};
 		this.store.dispatch(addReceipt({ receipt: receipt }));
 		this.store.dispatch(setSelectedReceipt({ id: currentId }));

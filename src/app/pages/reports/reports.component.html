@@ -5,7 +5,33 @@
   </ol>
 </nav>
 
-
-
-
-<p>reports works!</p>
+<br/><br/>
+<h3>Select Start and End Date</h3>
+<br/>
+<div class="text-center fs-1">
+  <form [formGroup]="reportForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group input-group-lg mb-3">
+          <span class="input-group-text">Start Date</span>
+          <input type="date" class="form-control" formControlName="startdate" aria-label="StartDate">
+          <div *ngIf="reportForm.get('startdate')?.hasError('required') && reportForm.get('startdate')?.touched" class="text-danger container-fluid">
+            Start Date is Required.			
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group input-group-lg mb-3">
+          <span class="input-group-text">End Date</span>
+          <input type="date" class="form-control" formControlName="enddate" aria-label="EndDate">
+          <div *ngIf="reportForm.get('enddate')?.hasError('required') && reportForm.get('enddate')?.touched" class="text-danger container-fluid">
+            End Date is Required.			
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <button type="submit" class="btn btn-primary btn-lg" [disabled]="reportForm.invalid">Generate</button>
+    </div>
+  </form>
+</div>

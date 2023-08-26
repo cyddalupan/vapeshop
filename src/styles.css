@@ -7,3 +7,10 @@ a {
   text-transform: none;
   color: black;
 }
+
+@media print {
+  /* Hide unnecessary elements */
+  .no-print {
+    display: none;
+  }
+}

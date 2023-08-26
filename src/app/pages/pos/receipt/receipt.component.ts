@@ -7,7 +7,6 @@ import { selectAllItems } from '../../inventory/store/inventory.selector';
 import { selectCurrentReceipt } from '../store/receipt.selector';
 import { Item } from '../../inventory/models';
 import { selectAllOrders } from '../store/order.selector';
-import { setReceipt } from '../store/receipt.actions';
 import { Order } from '../models';
 import { setOrder, setSelectedOrder, updateOrder } from '../store/order.actions';
 
@@ -23,15 +22,20 @@ export class ReceiptComponent implements AfterViewInit {
   activeItem: Item | null = null;
   items: Item[] = [];
 
-  orders$ = this.store.select(selectAllOrders).pipe(
-		map(order => order.filter(data => !data.deleted_at))
+  receipt$ = this.store.select(selectCurrentReceipt);
+
+  orders$ = combineLatest([this.store.select(selectAllOrders),this.receipt$]).pipe(
+		map(([order, receipt]) => 
+      order.filter(data => (
+        !data.deleted_at && receipt && 
+        receipt.id === data.receipt_id
+      ))
+    )
 	);
 
 	items$ = this.store.select(selectAllItems).pipe(
 		map(item => item.filter(data => !data.deleted_at))
 	);
-
-  receipt$ = this.store.select(selectCurrentReceipt);
 
   totalCost$ = this.orders$.pipe(
     map(orders => {
@@ -105,6 +109,10 @@ export class ReceiptComponent implements AfterViewInit {
 			}}))
     }
 	}
+
+  print() {
+    window.print();
+  }
   
   private setFocusOnInput() {
     // Find the input element by its selector (modify this selector according to your HTML structure)

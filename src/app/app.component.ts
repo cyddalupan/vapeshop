@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { UserService } from './service/user.service';
-import { filter, map, take } from 'rxjs';
+import { map, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { InitializeItem } from './pages/inventory/store/inventory.action';
 import { InventoryService } from './service/inventory.service';

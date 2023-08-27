@@ -9,8 +9,8 @@ export interface Receipt {
 
 export interface Order {
   id: number;
-  receipt_id: number;
-  item_id: number;
+  receipt: number;
+  item: number;
   quantity: number;
   price: number;
 	backup: boolean;

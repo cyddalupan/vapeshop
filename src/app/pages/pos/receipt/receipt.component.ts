@@ -28,7 +28,7 @@ export class ReceiptComponent implements AfterViewInit {
 		map(([order, receipt]) => 
       order.filter(data => (
         !data.deleted_at && receipt && 
-        receipt.id === data.receipt_id
+        receipt.id === data.receipt
       ))
     )
 	);

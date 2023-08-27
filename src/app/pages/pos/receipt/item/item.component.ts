@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 export class ItemComponent implements OnInit, AfterViewInit {
   public orderForm: FormGroup  = new FormGroup({
 		price: new FormControl(0, [Validators.required]),
-		quantity: new FormControl(1, [Validators.required]),
+		quantity: new FormControl(null, [Validators.required]),
 	});
 
   public receipt = {} as Receipt;
@@ -55,8 +55,8 @@ export class ItemComponent implements OnInit, AfterViewInit {
     const currentId = Number(Date.now());
 		const order: Order = {
 			id: currentId,
-      receipt_id: this.receipt.id,
-      item_id: this.item.id,
+      receipt: this.receipt.id,
+      item: this.item.id,
       quantity: Number(this.orderForm.get('quantity')!.value),
       price: Number(this.orderForm.get('price')!.value),
       backup: false,

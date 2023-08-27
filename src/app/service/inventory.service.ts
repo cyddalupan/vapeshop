@@ -6,6 +6,9 @@ import { Item } from '../pages/inventory/models';
 import { Observable, catchError, map, take, throwError } from 'rxjs';
 import { selectAllItems } from '../pages/inventory/store/inventory.selector';
 import { AddItem, deleteItem } from '../pages/inventory/store/inventory.action';
+import { ReceiptService } from './receipt.service';
+import { selectAllOrders } from '../pages/pos/store/order.selector';
+import { setOrder } from '../pages/pos/store/order.actions';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -22,7 +25,9 @@ export class InventoryService {
 
   constructor(
     private http: HttpClient,
-    private store: Store) { }
+    private store: Store,
+    private receiptService: ReceiptService,
+  ) { }
 
   public cloudbackup()
   {
@@ -34,7 +39,7 @@ export class InventoryService {
         const updatingItem = noBackup[0];
 
         let requestType:Observable<any>;
-        if (updatingItem.id > 1000)
+        if (updatingItem.id > 100000)
           requestType = this.addInventory(updatingItem);
         else
           requestType = this.editInventory(updatingItem.id, updatingItem);
@@ -52,10 +57,21 @@ export class InventoryService {
           // add store data.
       		this.store.dispatch(AddItem({...savedData, backup: true}));
 
+          // Update each order item id.
+          this.store.select(selectAllOrders).pipe(take(1)).subscribe(orders => {
+            const rawOrders = orders.filter(order => order.item === updatingItem.id);
+            rawOrders.map(order => {
+              this.store.dispatch(setOrder({order: {...order, item: savedData.id }}))
+            })
+          });
+
           // Trigger again.
-          this.cloudbackup();
+          setTimeout(() => {
+            this.cloudbackup();
+          }, 900);
         });
       } else {
+        this.receiptService.cloudbackup();
         this.fetchCloudData();
       }
     });

@@ -43,7 +43,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     const local = JSON.parse(String(localStorage.getItem('app')));
-    console.log("local",local);
 		if (local?.inventory)
 			this.store.dispatch(InitializeItem(local.inventory));
     if (local?.receipts)
@@ -52,19 +51,12 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.store.dispatch(InitializeOrder(local.orders));
 
     this.userService.getLoginStatus().pipe(take(1)).subscribe(data => {
-      console.log("check login stat");
-      console.log("check data",data);
       if (!data) {
-        console.log("error login");
         this.userService.login().pipe(take(1)).subscribe(logdata => {
-          console.log("done log data");
-          console.log("token", logdata.token);
-
           localStorage.setItem('token', logdata.token);
         });
       } else {
-        console.log("correct login");
-        console.log("login data",data);
+        console.log("correct login",data);
       }
     });
 
@@ -73,12 +65,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     });
 
     this.unsyncReceipt$.subscribe(data => {
-      console.log('receipt count:',data.length);
       this.unsyncReceiptCount = data.length;
     });
 
     this.unsyncOrders$.subscribe(data => {
-      console.log('order count:',data.length);
       this.unsyncOrderCount = data.length;
     });
 

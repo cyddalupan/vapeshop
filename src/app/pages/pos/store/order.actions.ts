@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { Update, EntityMap, EntityMapOne, Predicate } from '@ngrx/entity';
 import { Order } from '../models';
 
+export const InitializeOrder = createAction('[Order/API] Initialize Order',(localStorage: any) => ({ localStorage }));
 export const setSelectedOrder = createAction('[Order/API] Set Selected Order', props<{ id: number }>());
 export const loadOrders = createAction('[Order/API] Load Orders', props<{ orders: Order[] }>());
 export const setOrders = createAction('[Order/API] Set Orders', props<{ orders: Order[] }>());

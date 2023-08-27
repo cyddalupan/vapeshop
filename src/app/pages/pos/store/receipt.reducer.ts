@@ -18,6 +18,9 @@ export const initialState: State = adapter.getInitialState({
  
 export const receiptReducer = createReducer(
   initialState,
+  on(ReceiptActions.InitializeReceipt, (state, { localStorage }) => {
+    return localStorage;
+  }),
   on(ReceiptActions.setSelectedReceipt, (state, { id }) => ({...state, selectedReceiptId: id})),
   on(ReceiptActions.addReceipt, (state, { receipt }) => {
     return adapter.addOne(receipt, state)

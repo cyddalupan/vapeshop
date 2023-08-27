@@ -18,6 +18,9 @@ export const initialState: State = adapter.getInitialState({
  
 export const orderReducer = createReducer(
   initialState,
+  on(OrderActions.InitializeOrder, (state, { localStorage }) => {
+    return localStorage;
+  }),
   on(OrderActions.setSelectedOrder, (state, { id }) => ({...state, selectedOrderId: id})),
   on(OrderActions.addOrder, (state, { order }) => {
     return adapter.addOne(order, state)

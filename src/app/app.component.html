@@ -8,13 +8,13 @@
         type="button"
         class="btn no-print"
         [ngClass]="{
-          'btn-primary': (unsyncItemCount <= 10),
-          'btn-warning': (unsyncItemCount > 10 && unsyncItemCount <= 99),
-          'btn-danger': (unsyncItemCount > 99)
+          'btn-primary': (unsyncCount <= 10),
+          'btn-warning': (unsyncCount > 10 && unsyncCount <= 99),
+          'btn-danger': (unsyncCount > 99)
         }"
         (click)="backup()">
         <i class="bi bi-cloud-check-fill"></i>
-        Sync to Cloud ({{ unsyncItemCount }} data to sync)
+        Sync to Cloud ({{ unsyncCount }} data to sync)
       </button>
       <div *ngIf="!isOnline" class="fw-bold text-secondary">
         You Are Currently Offline

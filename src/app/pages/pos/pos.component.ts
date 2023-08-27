@@ -35,12 +35,16 @@ export class PosComponent implements OnInit {
   }
   
   onSubmit() {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString().split('T')[0];
+
     const currentId = Number(Date.now());
 		const receipt: Receipt = {
 			id: currentId,
 			customer: String(this.receiptForm.get('customer')!.value),
       total: 0,
       backup: false,
+      updated_at: formattedDate,
       deleted_at: null,
 		};
 		this.store.dispatch(addReceipt({ receipt: receipt }));

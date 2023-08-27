@@ -49,6 +49,9 @@ export class ItemComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString().split('T')[0];
+
     const currentId = Number(Date.now());
 		const order: Order = {
 			id: currentId,
@@ -57,6 +60,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
       quantity: Number(this.orderForm.get('quantity')!.value),
       price: Number(this.orderForm.get('price')!.value),
       backup: false,
+      updated_at: formattedDate,
       deleted_at: null,
 		};
 		this.store.dispatch(addOrder({ order: order }));

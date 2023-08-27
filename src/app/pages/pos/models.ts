@@ -3,6 +3,7 @@ export interface Receipt {
   customer: string;
   total: number;
 	backup: boolean;
+  updated_at: string;
   deleted_at: string|null;
 }
 
@@ -13,5 +14,6 @@ export interface Order {
   quantity: number;
   price: number;
 	backup: boolean;
+  updated_at: string;
   deleted_at: string|null;
 }

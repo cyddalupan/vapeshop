@@ -24,6 +24,10 @@ export class OrderService {
     private http: HttpClient,
     private store: Store) { }
 
+ 	public getAllOrder() {
+    return this.http.get<any[]>(this.mainURL+"pos/order").pipe(take(1));
+	}
+
   public cloudbackup()
   {
     this.store.select(selectAllOrders).pipe(

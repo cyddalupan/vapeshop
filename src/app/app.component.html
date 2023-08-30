@@ -6,15 +6,10 @@
     <div class="d-flex">
       <button *ngIf="isOnline"
         type="button"
-        class="btn no-print"
-        [ngClass]="{
-          'btn-primary': (unsyncCount <= 10),
-          'btn-warning': (unsyncCount > 10 && unsyncCount <= 99),
-          'btn-danger': (unsyncCount > 99)
-        }"
-        (click)="backup()">
+				class="btn no-print {{ getSyncColor((unSyncTotal$ | async)) }}"
+				(click)="backup()">
         <i class="bi bi-cloud-check-fill"></i>
-        Sync to Cloud ({{ unsyncCount }} data to sync)
+        Sync to Cloud ({{ unSyncTotal$ | async }} data to sync)
       </button>
       <div *ngIf="!isOnline" class="fw-bold text-secondary">
         You Are Currently Offline

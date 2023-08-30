@@ -2,6 +2,8 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { UserService } from './service/user.service';
 import { map, take } from 'rxjs';
 import { Store } from '@ngrx/store';
+
+import { SelectCount } from './store/app.selector';
 import { InitializeItem } from './pages/inventory/store/inventory.action';
 import { InventoryService } from './service/inventory.service';
 import { selectAllItems } from './pages/inventory/store/inventory.selector';
@@ -9,6 +11,7 @@ import { selectAllReceipts } from './pages/pos/store/receipt.selector';
 import { selectAllOrders } from './pages/pos/store/order.selector';
 import { InitializeReceipt } from './pages/pos/store/receipt.actions';
 import { InitializeOrder } from './pages/pos/store/order.actions';
+import { UpdateSyncCount } from './store/app.action';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +25,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   unsyncItemCount = 0;
   unsyncReceiptCount = 0;
   unsyncOrderCount = 0;
+
+	unSyncTotal$ = this.store.select(SelectCount);
 
   unsyncItem$ = this.store.select(selectAllItems).pipe(
     map(items => (items.filter(item => item.backup !== true)))
@@ -62,14 +67,17 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     this.unsyncItem$.subscribe(data => {
       this.unsyncItemCount = data.length;
+			this.updateUnsyncCount();
     });
 
     this.unsyncReceipt$.subscribe(data => {
       this.unsyncReceiptCount = data.length;
+			this.updateUnsyncCount();
     });
 
     this.unsyncOrders$.subscribe(data => {
       this.unsyncOrderCount = data.length;
+			this.updateUnsyncCount();
     });
 
     window.addEventListener('online', () => {
@@ -87,11 +95,24 @@ export class AppComponent implements OnInit, AfterViewInit {
     });
   }
 
-  get unsyncCount() {
-    return this.unsyncItemCount+
+	getSyncColor(unsync: number | null) {
+		let count = 0;
+		if (unsync)
+			count = unsync;
+		if (count <= 10)
+			return 'btn-primary';
+		if ((count > 10) && (count <= 99))
+			return  'btn-warning';
+		return 'btn-danger';
+	}
+
+	updateUnsyncCount() {
+		const total =  this.unsyncItemCount+
       this.unsyncReceiptCount+
       this.unsyncOrderCount;
-  }
+
+		this.store.dispatch(UpdateSyncCount({count: total}));
+	}
 
   logout() {
     this.userService.logout().pipe(take(1)).subscribe(data => {

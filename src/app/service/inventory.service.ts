@@ -74,7 +74,7 @@ export class InventoryService {
         this.receiptService.cloudbackup();
         this.fetchCloudData();
       }
-    });
+    })
   }
 
   addInventory(item: Item) {

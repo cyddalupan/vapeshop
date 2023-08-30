@@ -17,6 +17,8 @@ import { InventoryAddComponent } from './pages/inventory/inventory-add/inventory
 import { InventoryEditComponent } from './pages/inventory/inventory-edit/inventory-edit.component';
 import { ReceiptComponent } from './pages/pos/receipt/receipt.component';
 import { DatePipe } from '@angular/common';
+
+import { appReducer } from './store/app.reducer';
 import { receiptReducer } from './pages/pos/store/receipt.reducer';
 import { orderReducer } from './pages/pos/store/order.reducer';
 
@@ -36,6 +38,7 @@ import { orderReducer } from './pages/pos/store/order.reducer';
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot({
+			app: appReducer,
       inventory: inventoryReducer,
       receipts: receiptReducer,
       orders: orderReducer

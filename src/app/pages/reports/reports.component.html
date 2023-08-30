@@ -6,7 +6,7 @@
 </nav>
 <br/><br/>
 
-<div *ngIf="isOnline">
+<div *ngIf="available((unSyncTotal$ | async ))">
   <h3>Select Start and End Date</h3>
   <br/>
   <div class="text-center fs-1">
@@ -32,13 +32,18 @@
         </div>
       </div>
       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <button type="submit" class="btn btn-primary btn-lg" [disabled]="reportForm.invalid">Generate</button>
+        <button 
+					type="submit"
+					class="btn btn-primary btn-lg"
+					[disabled]="reportForm.invalid">
+						Generate
+				</button>
       </div>
     </form>
   </div>
 </div>
 
-<div *ngIf="!isOnline">
+<div *ngIf="!available((unSyncTotal$ | async ))">
   <div class="alert alert-secondary fs-3" role="alert">
     Generating the report requires an internet connection and synchronization.
   </div>

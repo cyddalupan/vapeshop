@@ -29,6 +29,10 @@ export class ReceiptService {
     private orderService: OrderService,
   ) { }
 
+ 	public getAllReceipt() {
+    return this.http.get<any[]>(this.mainURL+"pos/receipt").pipe(take(1));
+	}
+
   public cloudbackup()
   {
     this.store.select(selectAllReceipts).pipe(

@@ -21,6 +21,7 @@ import { DatePipe } from '@angular/common';
 import { appReducer } from './store/app.reducer';
 import { receiptReducer } from './pages/pos/store/receipt.reducer';
 import { orderReducer } from './pages/pos/store/order.reducer';
+import { TableViewComponent } from './pages/reports/table-view/table-view.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { orderReducer } from './pages/pos/store/order.reducer';
     InventoryAddComponent,
     InventoryEditComponent,
     ReceiptComponent,
+    TableViewComponent,
   ],
   imports: [
     BrowserModule,

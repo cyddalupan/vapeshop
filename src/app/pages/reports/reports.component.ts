@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { take } from 'rxjs';
+
 
 import { SelectCount } from '../../store/app.selector';
 import { ReceiptService } from '../../service/receipt.service';
 import { OrderService } from '../../service/order.service';
 import { Receipt } from '../pos/models';
 import { Order } from '../pos/models';
+import { selectAllItems } from '../inventory/store/inventory.selector';
+import { Item } from '../inventory/models';
 
 @Component({
   selector: 'app-reports',
@@ -18,6 +22,7 @@ export class ReportsComponent implements OnInit {
   formattedDate = new Date().toISOString().substr(0, 10);
 	receipts: Receipt[] = [];
 	orders: Order[] = [];
+	items: Item[] = [];
 	
 	unSyncTotal$ = this.store.select(SelectCount);
 
@@ -40,10 +45,18 @@ export class ReportsComponent implements OnInit {
     window.addEventListener('offline', () => {
       this.isOnline = false;
     });
+
+		this.store.select(selectAllItems).pipe(take(1)).subscribe(items => {
+			this.items = items;
+		});
   }
 
 	available(unsync: number | null) {
 		return (unsync === 0 && this.isOnline);
+	}
+
+	itemName(itemId: number) {
+		return this.items.filter(item => item.id === itemId)?.[0].name;
 	}
 
   onSubmit() {
@@ -60,8 +73,6 @@ export class ReportsComponent implements OnInit {
 					(new Date(receipt.updated_at).setHours(0, 0, 0, 0) >= startdate)) &&
 					(new Date(receipt.updated_at).setHours(0, 0, 0, 0) <= enddate)
 				);
-
-				console.log("receipts", this.receipts);
 			});
 
 			this.orderService.getAllOrder().subscribe(orders => {
@@ -69,11 +80,7 @@ export class ReportsComponent implements OnInit {
 					(new Date(orders.updated_at).setHours(0, 0, 0, 0) >= startdate)) &&
 					(new Date(orders.updated_at).setHours(0, 0, 0, 0) <= enddate)
 				);
-
-				console.log("order", this.orders);
 			});
-			
-			console.log("submit trigger");
 		}
   }
 }

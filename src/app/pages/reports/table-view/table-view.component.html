@@ -1,0 +1,23 @@
+<div *ngFor="let receipt of receipts" class="py-5">
+	<h4>Date: {{ receipt. updated_at }}</h4>
+	<h4>Customer: {{ receipt.customer }}</h4>
+	<table class="table mb-0">
+		<thead>
+			<tr>
+				<th scope="col">Name</th>
+				<th scope="col">Price</th>
+				<th scope="col">Quantity</th>
+				<th scope="col">Total</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let order of filterOrder(receipt.id)">
+				<th scope="row">{{ itemName(order.item) }}</th>
+				<td>{{ order.price }}</td>
+				<td>{{ order.quantity }}</td>
+				<td>{{ order.price * order.quantity }}</td>
+			</tr>
+		</tbody>
+	</table>
+	<h4>Total: {{ receipt.total }}</h4>
+</div>

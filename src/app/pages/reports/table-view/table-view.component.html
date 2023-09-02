@@ -1,6 +1,6 @@
 <div *ngFor="let receipt of receipts" class="py-5">
-	<h4>Date: {{ receipt. updated_at }}</h4>
-	<h4>Customer: {{ receipt.customer }}</h4>
+	<h4 class="my-3">Date: {{ receipt. updated_at }}</h4>
+	<h4 class="my-3">Customer: {{ receipt.customer }}</h4>
 	<table class="table mb-0">
 		<thead>
 			<tr>
@@ -19,5 +19,5 @@
 			</tr>
 		</tbody>
 	</table>
-	<h4>Total: {{ receipt.total }}</h4>
+	<h4 class="my-3">Total: {{ receipt.total }}</h4>
 </div>

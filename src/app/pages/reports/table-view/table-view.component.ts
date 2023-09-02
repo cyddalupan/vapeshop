@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { Receipt, Order } from '../../pos/models';
+import { Item } from '../../inventory/models';
 
 @Component({
   selector: 'app-table-view',
@@ -10,8 +11,13 @@ import { Receipt, Order } from '../../pos/models';
 export class TableViewComponent {
  @Input() receipts: Receipt[] = [];
  @Input() orders: Order[] = [];
+ @Input() items: Item[] = [];
 
- filterOrder(receiptId: number) {
-	 return this.orders.filter(order => order.receipt === receiptId);
- }
+  filterOrder(receiptId: number) {
+    return this.orders.filter(order => order.receipt === receiptId);
+  }
+
+	itemName(itemId: number) {
+		return this.items.filter(item => item.id === itemId)?.[0].name;
+	}
 }

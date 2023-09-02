@@ -55,10 +55,6 @@ export class ReportsComponent implements OnInit {
 		return (unsync === 0 && this.isOnline);
 	}
 
-	itemName(itemId: number) {
-		return this.items.filter(item => item.id === itemId)?.[0].name;
-	}
-
   onSubmit() {
 		let startdate = this.reportForm.get('startdate')?.value;
 		let enddate = this.reportForm.get('enddate')?.value;

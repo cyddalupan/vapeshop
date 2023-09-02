@@ -1,12 +1,12 @@
 <nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
+  <ol class="breadcrumb no-print">
     <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
     <li class="breadcrumb-item active" aria-current="page">Reports</li>
   </ol>
 </nav>
 <br/><br/>
 
-<div *ngIf="available((unSyncTotal$ | async ))">
+<div *ngIf="available((unSyncTotal$ | async ))" class="no-print">
   <h3>Select Start and End Date</h3>
   <br/>
   <div class="text-center fs-1">

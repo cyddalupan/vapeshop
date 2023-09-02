@@ -1,36 +1,40 @@
-import { AfterViewInit, Component, ElementRef, Renderer2 } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subject, combineLatest, debounceTime, map, take, takeUntil } from 'rxjs';
+import { Subject, combineLatest, debounceTime, delay, map, take, takeUntil } from 'rxjs';
 import { SetItem } from '../../inventory/store/inventory.action';
 import { selectAllItems } from '../../inventory/store/inventory.selector';
 import { selectCurrentReceipt } from '../store/receipt.selector';
 import { Item } from '../../inventory/models';
 import { selectAllOrders } from '../store/order.selector';
-import { Order } from '../models';
-import { setOrder, setSelectedOrder, updateOrder } from '../store/order.actions';
+import { Order, Receipt } from '../models';
+import { setOrder, setSelectedOrder } from '../store/order.actions';
+import { setReceipt } from '../store/receipt.actions';
 
 @Component({
   selector: 'app-receipt',
   templateUrl: './receipt.component.html',
   styleUrls: ['./receipt.component.css']
 })
-export class ReceiptComponent implements AfterViewInit {
+export class ReceiptComponent implements AfterViewInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
   private inputSubject = new Subject<string>();
 
   activeItem: Item | null = null;
   items: Item[] = [];
+  receipt: Receipt|null = null;
 
   receipt$ = this.store.select(selectCurrentReceipt);
 
   orders$ = combineLatest([this.store.select(selectAllOrders),this.receipt$]).pipe(
-		map(([order, receipt]) => 
-      order.filter(data => (
+    map(([order, receipt]) => {
+      if (receipt)
+        this.receipt = receipt;
+      return order.filter(data => (
         !data.deleted_at && receipt && 
         receipt.id === data.receipt
       ))
-    )
+    })
 	);
 
 	items$ = this.store.select(selectAllItems).pipe(
@@ -69,6 +73,25 @@ export class ReceiptComponent implements AfterViewInit {
   ngAfterViewInit() {
     // Set focus on the input element after the view has been initialized
     this.setFocusOnInput();
+
+    this.totalCost$.pipe(
+      takeUntil(this.unsubscribe$),
+      delay(2000)
+    ).subscribe(total => {
+      console.log("total",total);
+      console.log("receipt",this.receipt);
+
+      if (this.receipt)
+        this.store.dispatch(setReceipt({ receipt: {
+          ...this.receipt,
+          total: total
+        }}));
+    });
+  }
+  
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
   
   onBarcodeScanned(event: KeyboardEvent) {

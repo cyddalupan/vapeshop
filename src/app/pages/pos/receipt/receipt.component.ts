@@ -20,6 +20,7 @@ export class ReceiptComponent implements AfterViewInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
   private inputSubject = new Subject<string>();
 
+  totalReady = false;
   activeItem: Item | null = null;
   items: Item[] = [];
   receipt: Receipt|null = null;
@@ -78,8 +79,7 @@ export class ReceiptComponent implements AfterViewInit, OnDestroy {
       takeUntil(this.unsubscribe$),
       delay(2000)
     ).subscribe(total => {
-      console.log("total",total);
-      console.log("receipt",this.receipt);
+      this.totalReady = true;
 
       if (this.receipt)
         this.store.dispatch(setReceipt({ receipt: {

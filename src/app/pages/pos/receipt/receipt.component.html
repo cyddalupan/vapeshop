@@ -9,10 +9,12 @@
    <div class="fs-1">
       Scan Item or Type Item ID
    </div>
-   <div class="fs-1">
-      <i class="bi bi-upc"></i>
-      <input id="barcode" type="text" placeholder="Insert Item ID" #barcodeInput (keyup)="onBarcodeScanned($event)" autofocus>
-   </div>
+   <div class="input-group input-group-lg">
+      <span class="input-group-text">
+         <i class="bi bi-upc"></i>
+      </span>
+      <input id="barcode" type="text" class="form-control" placeholder="Insert Item ID" #barcodeInput (keyup)="onBarcodeScanned($event)" autofocus>
+    </div>
    <p>{{ detectedItem }}</p>
 </div>
 
@@ -44,6 +46,6 @@
 </div>
 
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-   <button type="button" class="btn btn-primary no-print" (click)="print()">Print</button>
-   <button type="button" class="btn btn-success no-print" routerLink="/pos">New Order</button>
+   <button type="button" class="btn btn-primary no-print" (click)="print()" [disabled]="!totalReady">Print</button>
+   <button type="button" class="btn btn-success no-print" routerLink="/pos" [disabled]="!totalReady">New Order</button>
 </div>

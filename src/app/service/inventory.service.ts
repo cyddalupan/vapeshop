@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { environment } from 'src/environment/environment';
 import { Item } from '../pages/inventory/models';
@@ -10,24 +10,27 @@ import { ReceiptService } from './receipt.service';
 import { selectAllOrders } from '../pages/pos/store/order.selector';
 import { setOrder } from '../pages/pos/store/order.actions';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': `Token ${localStorage.getItem('token')}`,
-  })
-};
-
 @Injectable({
   providedIn: 'root'
 })
-export class InventoryService {
+export class InventoryService implements OnInit {
   protected mainURL = `${environment.apiURL}`;
+  httpOptions:any;
 
   constructor(
     private http: HttpClient,
     private store: Store,
     private receiptService: ReceiptService,
   ) { }
+
+  ngOnInit(): void {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${localStorage.getItem('token')}`,
+      })
+    };
+  }
 
   public cloudbackup()
   {
@@ -78,11 +81,11 @@ export class InventoryService {
   }
 
   addInventory(item: Item) {
-    return this.http.post<any>(this.mainURL+"inventory/", item, httpOptions);
+    return this.http.post<any>(this.mainURL+"inventory/", item, this.httpOptions);
   }
 
   editInventory(id:number, item: Item) {
-    return this.http.put<any>(this.mainURL+"inventory/"+id+"/", item, httpOptions);
+    return this.http.put<any>(this.mainURL+"inventory/"+id+"/", item, this.httpOptions);
   }
 
   fetchCloudData() {

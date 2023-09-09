@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { environment } from 'src/environment/environment';
 import { selectAllReceipts } from '../pages/pos/store/receipt.selector';
@@ -10,24 +10,27 @@ import { OrderService } from './order.service';
 import { selectAllOrders } from '../pages/pos/store/order.selector';
 import { setOrder } from '../pages/pos/store/order.actions';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': `Token ${localStorage.getItem('token')}`,
-  })
-};
-
 @Injectable({
   providedIn: 'root'
 })
-export class ReceiptService {
+export class ReceiptService implements OnInit {
   protected mainURL = `${environment.apiURL}`;
+  httpOptions: any;
 
   constructor(
     private http: HttpClient,
     private store: Store,
     private orderService: OrderService,
   ) { }
+
+  ngOnInit(): void {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${localStorage.getItem('token')}`,
+      })
+    };
+  }
 
  	public getAllReceipt() {
     return this.http.get<any[]>(this.mainURL+"pos/receipt").pipe(take(1));
@@ -78,11 +81,11 @@ export class ReceiptService {
   }
 
   addApi(receipt: Receipt) {
-    return this.http.post<any>(this.mainURL+"pos/receipt", receipt, httpOptions);
+    return this.http.post<any>(this.mainURL+"pos/receipt", receipt, this.httpOptions);
   }
 
   editApi(id:number, receipt: Receipt) {
-    return this.http.put<any>(this.mainURL+"pos/receipt/"+id+"/", receipt, httpOptions);
+    return this.http.put<any>(this.mainURL+"pos/receipt/"+id+"/", receipt, this.httpOptions);
   }
 }
 

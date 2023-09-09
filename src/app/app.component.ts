@@ -56,8 +56,11 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.store.dispatch(InitializeOrder(local.orders));
 
     this.userService.getLoginStatus().pipe(take(1)).subscribe(data => {
+      console.log("check login");
       if (!data) {
+        console.log("No Data, run login");
         this.userService.login().pipe(take(1)).subscribe(logdata => {
+          console.log("logdata",logdata);
           localStorage.setItem('token', logdata.token);
         });
       } else {

@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { environment } from 'src/environment/environment';
 import { selectAllOrders } from '../pages/pos/store/order.selector';
@@ -7,22 +7,25 @@ import { Observable, catchError, map, take, throwError } from 'rxjs';
 import { Order } from '../pages/pos/models';
 import { deleteOrder } from '../pages/pos/store/order.actions';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': `Token ${localStorage.getItem('token')}`,
-  })
-};
-
 @Injectable({
   providedIn: 'root'
 })
-export class OrderService {
+export class OrderService implements OnInit {
   protected mainURL = `${environment.apiURL}`;
+  httpOptions: any;
 
   constructor(
     private http: HttpClient,
     private store: Store) { }
+
+  ngOnInit(): void {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${localStorage.getItem('token')}`,
+      })
+    };
+  }
 
  	public getAllOrder() {
     return this.http.get<any[]>(this.mainURL+"pos/order").pipe(take(1));
@@ -63,10 +66,10 @@ export class OrderService {
   }
 
   addApi(order: Order) {
-    return this.http.post<any>(this.mainURL+"pos/order", order, httpOptions);
+    return this.http.post<any>(this.mainURL+"pos/order", order, this.httpOptions);
   }
 
   editApi(id:number, order: Order) {
-    return this.http.put<any>(this.mainURL+"pos/order/"+id+"/", order, httpOptions);
+    return this.http.put<any>(this.mainURL+"pos/order/"+id+"/", order, this.httpOptions);
   }
 }

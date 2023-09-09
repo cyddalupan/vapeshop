@@ -77,7 +77,7 @@ export class ReceiptComponent implements AfterViewInit, OnDestroy {
 
     this.totalCost$.pipe(
       takeUntil(this.unsubscribe$),
-      delay(2000)
+      delay(1000)
     ).subscribe(total => {
       this.totalReady = true;
 

@@ -49,3 +49,4 @@
    <button type="button" class="btn btn-primary no-print" (click)="print()" [disabled]="!totalReady">Print</button>
    <button type="button" class="btn btn-success no-print" routerLink="/pos" [disabled]="!totalReady">New Order</button>
 </div>
+<div *ngIf="!totalReady" class="overlay"></div>

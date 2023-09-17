@@ -3,8 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { SetItem, updateItem } from '../store/inventory.action';
-import { selectCurrentItem } from '../store/inventory.selector';
-import { take } from 'rxjs';
+import { selectAllItems, selectCurrentItem } from '../store/inventory.selector';
+import { map, take } from 'rxjs';
 import { Item } from '../models';
 
 @Component({
@@ -13,11 +13,16 @@ import { Item } from '../models';
   styleUrls: ['./inventory-edit.component.css']
 })
 export class InventoryEditComponent implements OnInit {
+	items: Item[] = [];
+	items$ = this.store.select(selectAllItems).pipe(
+		map(item => item.filter(data => !data.deleted_at))
+	);
 
+  public currentBarcode = 0;
   public itemId = 0;
 
 	public inventoryForm = new FormGroup({
-		code: new FormControl('', [Validators.required]),
+		code: new FormControl('', [Validators.required, this.validateBarcode.bind(this)]),
 		name: new FormControl('', [Validators.required]),
 		price: new FormControl('', [Validators.required]),
 		desc: new FormControl(),
@@ -30,11 +35,16 @@ export class InventoryEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+		this.items$.pipe(take(1)).subscribe(items => {
+			this.items = items;
+		});
+
     this.itemId = Number(this.route.snapshot.paramMap.get('id'));
     if (this.itemId) {
       this.store.dispatch(SetItem(this.itemId));
       this.store.select(selectCurrentItem).pipe(take(1)).subscribe(item => {
         if (item) {
+          this.currentBarcode = Number(item.code);
           this.inventoryForm.get("code")?.setValue(String(item.code));
           this.inventoryForm.get("name")?.setValue(String(item.name));
           this.inventoryForm.get("price")?.setValue(String(item.price));
@@ -57,4 +67,12 @@ export class InventoryEditComponent implements OnInit {
 		this.router.navigate(['/inventory']);
 	}
 
+	validateBarcode(control: any) {
+    const barcode = control.value;
+		const existingBarcodes = this.items.map(item => item.code).filter(code => code !== this.currentBarcode);
+		if (existingBarcodes.includes(barcode)) {
+      return { duplicateBarcode: true };
+    }
+    return null;
+  }
 }

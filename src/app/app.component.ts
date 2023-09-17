@@ -9,9 +9,10 @@ import { InventoryService } from './service/inventory.service';
 import { selectAllItems } from './pages/inventory/store/inventory.selector';
 import { selectAllReceipts } from './pages/pos/store/receipt.selector';
 import { selectAllOrders } from './pages/pos/store/order.selector';
-import { InitializeReceipt } from './pages/pos/store/receipt.actions';
+import { InitializeReceipt, deleteReceipt } from './pages/pos/store/receipt.actions';
 import { InitializeOrder } from './pages/pos/store/order.actions';
 import { UpdateSyncCount } from './store/app.action';
+import { Order, Receipt } from './pages/pos/models';
 
 @Component({
   selector: 'app-root',
@@ -32,10 +33,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     map(items => (items.filter(item => item.backup !== true)))
   );
 
+  unsyncReceipts: Receipt[] = [];
   unsyncReceipt$ = this.store.select(selectAllReceipts).pipe(
     map(receipts => (receipts.filter(receipt => receipt.backup !== true)))
   );
 
+  unsyncOrders: Order[] = [];
   unsyncOrders$ = this.store.select(selectAllOrders).pipe(
     map(orders => (orders.filter(order => order.backup !== true)))
   );
@@ -73,11 +76,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.unsyncReceipt$.subscribe(data => {
       this.unsyncReceiptCount = data.length;
 			this.updateUnsyncCount();
+      this.unsyncReceipts = data;
     });
 
     this.unsyncOrders$.subscribe(data => {
       this.unsyncOrderCount = data.length;
 			this.updateUnsyncCount();
+      this.unsyncOrders = data;
     });
 
     window.addEventListener('online', () => {
@@ -121,6 +126,14 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   backup() {
+    // Delete all receipt with no orders
+    const ordersReceiptsIds = this.unsyncOrders.map(order => order.receipt);
+    this.unsyncReceipts.map(receipt => {
+      if (!ordersReceiptsIds.includes(receipt.id)) {
+        this.store.dispatch(deleteReceipt({ id: receipt.id }));	
+      }
+    });
+
     this.inventoryService.cloudbackup();
   }
 

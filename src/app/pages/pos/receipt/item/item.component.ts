@@ -8,6 +8,7 @@ import { selectCurrentReceipt } from '../../store/receipt.selector';
 import { Item } from 'src/app/pages/inventory/models';
 import { addOrder } from '../../store/order.actions';
 import { Router } from '@angular/router';
+import { updateItem } from 'src/app/pages/inventory/store/inventory.action';
 
 @Component({
   selector: 'app-item',
@@ -51,19 +52,22 @@ export class ItemComponent implements OnInit, AfterViewInit {
   onSubmit() {
     const currentDate = new Date();
     const formattedDate = currentDate.toISOString().split('T')[0];
+    const quantity = Number(this.orderForm.get('quantity')!.value);
 
     const currentId = Number(Date.now());
 		const order: Order = {
 			id: currentId,
       receipt: this.receipt.id,
       item: this.item.id,
-      quantity: Number(this.orderForm.get('quantity')!.value),
+      quantity: quantity,
       price: Number(this.orderForm.get('price')!.value),
       backup: false,
       updated_at: formattedDate,
       deleted_at: null,
 		};
 		this.store.dispatch(addOrder({ order: order }));
+    
+		this.store.dispatch(updateItem({...this.item, stock: this.item.stock - quantity}));	
 		this.router.navigate(['/receipt']);
   }
 

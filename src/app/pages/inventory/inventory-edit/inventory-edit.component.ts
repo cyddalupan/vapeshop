@@ -25,6 +25,7 @@ export class InventoryEditComponent implements OnInit {
 		code: new FormControl('', [Validators.required, this.validateBarcode.bind(this)]),
 		name: new FormControl('', [Validators.required]),
 		price: new FormControl('', [Validators.required]),
+		stock: new FormControl('', [Validators.required]),
 		desc: new FormControl(),
 	});
 
@@ -48,6 +49,7 @@ export class InventoryEditComponent implements OnInit {
           this.inventoryForm.get("code")?.setValue(String(item.code));
           this.inventoryForm.get("name")?.setValue(String(item.name));
           this.inventoryForm.get("price")?.setValue(String(item.price));
+          this.inventoryForm.get("stock")?.setValue(String(item.stock));
           this.inventoryForm.get("desc")?.setValue(String(item.desc));
         } 
       });
@@ -60,6 +62,7 @@ export class InventoryEditComponent implements OnInit {
 			code: Number(this.inventoryForm.get('code')!.value),
 			name: String(this.inventoryForm.get('name')!.value),
 			price: Number(this.inventoryForm.get('price')!.value),
+			stock: Number(this.inventoryForm.get('stock')!.value),
 			desc: String(this.inventoryForm.get('desc')!.value),
 			backup: false,
 		};		

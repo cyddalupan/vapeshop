@@ -37,8 +37,15 @@
 	<div class="form-group mb-3">
 		<label class="form-label">Price</label>
 		<input type="number" class="form-control" formControlName="price" placeholder="Price">
-	<div *ngIf="inventoryForm.get('price')?.hasError('required') && inventoryForm.get('price')?.touched" class="text-danger">
+		<div *ngIf="inventoryForm.get('price')?.hasError('required') && inventoryForm.get('price')?.touched" class="text-danger">
 			Price is Required.			
+		</div>
+	</div>
+	<div class="form-group mb-3">
+		<label class="form-label">Stocks</label>
+		<input type="number" class="form-control" formControlName="stock" placeholder="Stock">
+		<div *ngIf="inventoryForm.get('stock')?.hasError('required') && inventoryForm.get('stock')?.touched" class="text-danger">
+			Stocks is Required.			
 		</div>
 	</div>
 	<div class="form-group form-floating">

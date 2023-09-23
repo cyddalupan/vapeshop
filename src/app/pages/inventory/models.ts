@@ -4,6 +4,7 @@ export interface Item {
   name: string;
   price: number;
 	desc: string;
+  stock: number;
 	backup?: boolean;
   created_at?: string;
   updated_at?: string;

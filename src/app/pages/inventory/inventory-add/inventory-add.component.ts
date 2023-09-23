@@ -23,6 +23,7 @@ export class InventoryAddComponent implements OnInit {
 		code: new FormControl('', [Validators.required, this.validateBarcode.bind(this)]),
 		name: new FormControl('', [Validators.required]),
 		price: new FormControl('', [Validators.required]),
+		stock: new FormControl('', [Validators.required]),
 		desc: new FormControl(),
 	});
 
@@ -43,6 +44,7 @@ export class InventoryAddComponent implements OnInit {
 			code: Number(this.inventoryForm.get('code')!.value),
 			name: String(this.inventoryForm.get('name')!.value),
 			price: Number(this.inventoryForm.get('price')!.value),
+			stock: Number(this.inventoryForm.get('stock')!.value),
 			desc: String(this.inventoryForm.get('desc')!.value),
 		};		
 		this.store.dispatch(AddItem(item));	

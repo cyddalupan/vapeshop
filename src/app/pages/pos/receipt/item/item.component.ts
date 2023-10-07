@@ -67,7 +67,11 @@ export class ItemComponent implements OnInit, AfterViewInit {
 		};
 		this.store.dispatch(addOrder({ order: order }));
     
-		this.store.dispatch(updateItem({...this.item, stock: this.item.stock - quantity}));	
+		this.store.dispatch(updateItem({
+			...this.item,
+			stock: this.item.stock - quantity,
+			backup: false,
+		}));	
 		this.router.navigate(['/receipt']);
   }
 

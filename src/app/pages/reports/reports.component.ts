@@ -79,7 +79,7 @@ export class ReportsComponent implements OnInit {
 		}
   }
 
-	testCsv() {
+	generateCSV() {
 		var options = { 
 			headers: [
 				"Date",

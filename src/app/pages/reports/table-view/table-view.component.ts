@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Receipt, Order } from '../../pos/models';
 import { Item } from '../../inventory/models';
@@ -12,6 +12,8 @@ export class TableViewComponent {
  @Input() receipts: Receipt[] = [];
  @Input() orders: Order[] = [];
  @Input() items: Item[] = [];
+
+ @Output() generateCSV: EventEmitter<void> = new EventEmitter<void>();
 
   filterOrder(receiptId: number) {
     return this.orders.filter(order => order.receipt === receiptId);

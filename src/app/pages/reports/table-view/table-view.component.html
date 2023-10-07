@@ -21,5 +21,12 @@
 	</table>
 	<h4 class="my-3">Total: {{ receipt.total }}</h4>
 </div>
-<button *ngIf="receipts.length > 0" type="button" class="btn btn-primary no-print btn-lg" (click)="print()">Print</button>
+<div class="row">
+	<div class="col-md-8">
+		<button *ngIf="receipts.length > 0" type="button" class="btn btn-primary no-print btn-lg btn-block" (click)="print()">Print</button>
+	</div>
+	<div class="col-md-4 text-right">
+		<button *ngIf="receipts.length > 0" type="button" class="btn btn-info no-print btn-lg btn-block" (click)="generateCSV.emit()">Generate CSV</button>
+	</div>
+</div>
 

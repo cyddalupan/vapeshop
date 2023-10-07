@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { take } from 'rxjs';
+import { ngxCsv } from 'ngx-csv/ngx-csv';
 
 
 import { SelectCount } from '../../store/app.selector';
@@ -61,8 +62,6 @@ export class ReportsComponent implements OnInit {
 		if (startdate && enddate) {
 			startdate = new Date(startdate).setHours(0, 0, 0, 0);
 			enddate = new Date(enddate).setHours(0, 0, 0, 0);
-			console.log('startdate', startdate);
-			console.log('enddate', enddate);
 
 			this.receiptService.getAllReceipt().subscribe(receipts => {
 				this.receipts = receipts.filter(receipt => (
@@ -79,4 +78,47 @@ export class ReportsComponent implements OnInit {
 			});
 		}
   }
+
+	testCsv() {
+		var options = { 
+			headers: [
+				"Date",
+				"Customer",
+				"Item",
+				"Price",
+				"Quantity",
+				"Total",
+				"Receipt Total",
+			]
+		};
+
+		var data = [];
+		for (let receipt of this.receipts) {
+			const oreders = this.orders.filter(order => order.receipt === receipt.id);
+		
+			for (let order of oreders) {
+				data.push({
+					Date: new Date(receipt.updated_at).toLocaleString(),
+					Customer: receipt.customer,
+					Item: this.items.filter(item => item.id === order.item)?.[0].name,
+					Price: order.price,
+					Quantity: order.quantity,
+					Total: order.price * order.quantity,
+					Rtotal: "",
+				});
+			}
+			// Push Total.
+			data.push({
+				Date: "",
+				Customer: "",
+				Item: "",
+				Price: "",
+				Quantity: "",
+				Total: "",
+				Rtotal: receipt.total,
+			});
+		}
+		 
+		new ngxCsv(data, 'Report', options);
+	}
 }

@@ -8,7 +8,8 @@
         type="button"
 				class="btn no-print {{ getSyncColor((unSyncTotal$ | async)) }}"
 				routerLink="/home"
-        (click)="backup()">
+        (click)="backup()"
+				[disabled]="isSync">
         <i class="bi bi-cloud-check-fill"></i>
         Sync to Cloud ({{ unSyncTotal$ | async }} data to sync)
       </button>

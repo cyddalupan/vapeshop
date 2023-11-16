@@ -2,6 +2,8 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, Renderer2 } from '@ang
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subject, combineLatest, debounceTime, delay, map, take, takeUntil } from 'rxjs';
+
+import { updateItem } from 'src/app/pages/inventory/store/inventory.action';
 import { SetItem } from '../../inventory/store/inventory.action';
 import { selectAllItems } from '../../inventory/store/inventory.selector';
 import { selectCurrentReceipt } from '../store/receipt.selector';
@@ -119,18 +121,25 @@ export class ReceiptComponent implements AfterViewInit, OnDestroy {
     return "Item not found";
   }
 
-  deleteOrder(order: Order) {
+	deleteOrder(order: Order) {
 		if (confirm('Are you sure you want to order?')) {
 			const currentDate = new Date();
 			const formattedDate = currentDate.toISOString().split('T')[0];
+			const deletedItem = this.items.filter(item => item.id === order.item)[0];
 
-      this.store.dispatch(setSelectedOrder({id: order.id}));
-      this.store.dispatch(setOrder({order: {
+			this.store.dispatch(setSelectedOrder({id: order.id}));
+			this.store.dispatch(setOrder({order: {
 				...order,
 				backup: false,
 				deleted_at: formattedDate,
-			}}))
-    }
+			}}));
+
+			this.store.dispatch(updateItem({
+				...deletedItem,
+				stock: deletedItem.stock + order.quantity,
+				backup: false,
+			}));	
+		}
 	}
 
   print() {

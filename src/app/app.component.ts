@@ -22,6 +22,8 @@ import { Order, Receipt } from './pages/pos/models';
 export class AppComponent implements OnInit, AfterViewInit {
   title = 'vapeshop';
   isOnline = navigator.onLine;
+	isSync = false;
+	total = 0;
 
   unsyncItemCount = 0;
   unsyncReceiptCount = 0;
@@ -112,11 +114,13 @@ export class AppComponent implements OnInit, AfterViewInit {
 	}
 
 	updateUnsyncCount() {
-		const total =  this.unsyncItemCount+
+		this.total =  this.unsyncItemCount+
       this.unsyncReceiptCount+
       this.unsyncOrderCount;
 
-		this.store.dispatch(UpdateSyncCount({count: total}));
+		this.store.dispatch(UpdateSyncCount({count: this.total}));
+		if (this.total === 0)
+			this.isSync = false;
 	}
 
   logout() {
@@ -126,6 +130,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   backup() {
+		if (this.isSync)
+			return;
+		this.isSync = true;
     // Delete all receipt with no orders
     const ordersReceiptsIds = this.unsyncOrders.map(order => order.receipt);
     this.unsyncReceipts.map(receipt => {

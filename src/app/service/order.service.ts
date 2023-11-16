@@ -50,6 +50,9 @@ export class OrderService implements OnInit {
           take(1),
           catchError(error => {
             console.error('API Error:', error);
+						setTimeout(() => {
+							this.cloudbackup();
+						}, 5900);
             return throwError('Something went wrong.');
           })
         ).subscribe(savedData => {
@@ -59,7 +62,7 @@ export class OrderService implements OnInit {
           // Trigger again.
           setTimeout(() => {
             this.cloudbackup();
-          }, 900);
+          }, 2900);
         });
       }
     });

@@ -49,10 +49,13 @@ export class InventoryService implements OnInit {
 
         requestType.pipe(
           take(1),
-          catchError(error => {
-            console.error('API Error:', error);
-            return throwError('Something went wrong.');
-          })
+					catchError(error => {
+						console.error('API Error:', error);
+						setTimeout(() => {
+							this.cloudbackup();
+						}, 5900);
+						return throwError('Something went wrong.');
+					})
         ).subscribe(savedData => {
           // delete store data.  
       		this.store.dispatch(deleteItem(updatingItem.id));	
@@ -71,7 +74,7 @@ export class InventoryService implements OnInit {
           // Trigger again.
           setTimeout(() => {
             this.cloudbackup();
-          }, 900);
+          }, 2900);
         });
       } else {
         this.receiptService.cloudbackup();

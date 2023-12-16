@@ -8,6 +8,7 @@ import { ItemComponent } from './pages/pos/receipt/item/item.component';
 import { InventoryAddComponent } from './pages/inventory/inventory-add/inventory-add.component';
 import { InventoryEditComponent } from './pages/inventory/inventory-edit/inventory-edit.component';
 import { ReceiptComponent } from './pages/pos/receipt/receipt.component';
+import { ExtraComponent } from './pages/extra/extra.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -23,6 +24,9 @@ const routes: Routes = [
   { path: 'item', component: ItemComponent },
 
   { path: 'reports', component: ReportsComponent },
+
+  // Extra
+  { path: 'extra', component: ExtraComponent },
 
 	{ path: '', redirectTo: '/home', pathMatch: 'full' },
 	{ path: '**', redirectTo: '/home' },

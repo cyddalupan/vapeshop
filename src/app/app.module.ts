@@ -22,6 +22,7 @@ import { appReducer } from './store/app.reducer';
 import { receiptReducer } from './pages/pos/store/receipt.reducer';
 import { orderReducer } from './pages/pos/store/order.reducer';
 import { TableViewComponent } from './pages/reports/table-view/table-view.component';
+import { ExtraComponent } from './pages/extra/extra.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { TableViewComponent } from './pages/reports/table-view/table-view.compon
     InventoryEditComponent,
     ReceiptComponent,
     TableViewComponent,
+    ExtraComponent,
   ],
   imports: [
     BrowserModule,

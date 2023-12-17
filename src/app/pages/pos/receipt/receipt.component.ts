@@ -74,7 +74,6 @@ export class ReceiptComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log("WHEN TRIGGER");
     this.totalCost$.pipe(
       take(1),
     ).subscribe(total => {

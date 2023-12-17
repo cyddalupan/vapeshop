@@ -23,6 +23,8 @@ import { receiptReducer } from './pages/pos/store/receipt.reducer';
 import { orderReducer } from './pages/pos/store/order.reducer';
 import { TableViewComponent } from './pages/reports/table-view/table-view.component';
 import { ExtraComponent } from './pages/extra/extra.component';
+import { EffectsModule } from '@ngrx/effects';
+import { InventoryEffects } from './pages/inventory/store/inventory.effects';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import { ExtraComponent } from './pages/extra/extra.component';
       orders: orderReducer
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    EffectsModule.forRoot(InventoryEffects),
     HttpClientModule,
 		ReactiveFormsModule,
   ],

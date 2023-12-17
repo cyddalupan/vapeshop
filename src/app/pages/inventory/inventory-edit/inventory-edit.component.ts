@@ -64,7 +64,7 @@ export class InventoryEditComponent implements OnInit {
 			price: Number(this.inventoryForm.get('price')!.value),
 			stock: Number(this.inventoryForm.get('stock')!.value),
 			desc: String(this.inventoryForm.get('desc')!.value),
-			backup: false,
+			backup: true,
 		};		
 		this.store.dispatch(updateItem(item));	
 		this.router.navigate(['/inventory']);

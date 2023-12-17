@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subject, combineLatest, debounceTime, delay, map, take, takeUntil } from 'rxjs';
+import { Subject, combineLatest, debounceTime, delay, map, take, takeUntil, tap } from 'rxjs';
 
 import { updateItem } from 'src/app/pages/inventory/store/inventory.action';
 import { SetItem } from '../../inventory/store/inventory.action';
@@ -11,7 +11,7 @@ import { Item } from '../../inventory/models';
 import { selectAllOrders } from '../store/order.selector';
 import { Order, Receipt } from '../models';
 import { setOrder, setSelectedOrder } from '../store/order.actions';
-import { setReceipt } from '../store/receipt.actions';
+import { initSetReceipt, setReceipt } from '../store/receipt.actions';
 
 @Component({
   selector: 'app-receipt',
@@ -73,22 +73,24 @@ export class ReceiptComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  ngAfterViewInit() {
-    // Set focus on the input element after the view has been initialized
-    this.setFocusOnInput();
-
+  ngOnInit() {
+    console.log("WHEN TRIGGER");
     this.totalCost$.pipe(
-      takeUntil(this.unsubscribe$),
-      delay(1000)
+      take(1),
     ).subscribe(total => {
       this.totalReady = true;
 
       if (this.receipt)
-        this.store.dispatch(setReceipt({ receipt: {
+        this.store.dispatch(initSetReceipt({ receipt: {
           ...this.receipt,
           total: total
         }}));
     });
+  }
+
+  ngAfterViewInit() {
+    // Set focus on the input element after the view has been initialized
+    this.setFocusOnInput();
   }
   
   ngOnDestroy(): void {

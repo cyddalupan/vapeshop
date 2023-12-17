@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { InventoryService } from "src/app/service/inventory.service";
 import { ItemActions } from "./inventory.action";
-import { catchError, exhaustMap, map, of } from "rxjs";
+import { EMPTY, catchError, exhaustMap, map, of } from "rxjs";
 
 @Injectable()
 export class InventoryEffects {
@@ -12,7 +12,7 @@ export class InventoryEffects {
     exhaustMap((action: any) => this.inventoryService.addInventory(action.item)
       .pipe(
         map(item => ({ type: ItemActions.AddItemDone, payload: item })),
-        catchError(() => of({ type: ItemActions.AddItem }))
+        catchError(() => EMPTY)
       ))
     )
   );
@@ -22,7 +22,7 @@ export class InventoryEffects {
     exhaustMap((action: any) => this.inventoryService.editInventory(action.item.id, action.item)
       .pipe(
         map(item => ({ type: ItemActions.UpdateItemDone, payload: item })),
-        catchError(() => of({ type: ItemActions.UpdateItem }))
+        catchError(() => EMPTY)
       ))
     )
   );

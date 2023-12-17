@@ -25,6 +25,7 @@ import { TableViewComponent } from './pages/reports/table-view/table-view.compon
 import { ExtraComponent } from './pages/extra/extra.component';
 import { EffectsModule } from '@ngrx/effects';
 import { InventoryEffects } from './pages/inventory/store/inventory.effects';
+import { ReceiptEffects } from './pages/pos/store/receipt.effects';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,7 @@ import { InventoryEffects } from './pages/inventory/store/inventory.effects';
       orders: orderReducer
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot(InventoryEffects),
+    EffectsModule.forRoot(InventoryEffects, ReceiptEffects),
     HttpClientModule,
 		ReactiveFormsModule,
   ],

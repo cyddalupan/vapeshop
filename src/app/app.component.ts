@@ -49,6 +49,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.inventoryService.fetchCloudData();
+		/** Local Storage to store
     const local = JSON.parse(String(localStorage.getItem('app')));
 		if (local?.inventory)
 			this.store.dispatch(InitializeItem(local.inventory));
@@ -66,6 +67,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         console.log("correct login",data);
       }
     });
+		*/
 
     this.unsyncReceipt$.subscribe(data => {
       this.unsyncReceiptCount = data.length;

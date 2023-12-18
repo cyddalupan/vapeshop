@@ -10,7 +10,7 @@ import { selectCurrentReceipt } from '../store/receipt.selector';
 import { Item } from '../../inventory/models';
 import { selectAllOrders } from '../store/order.selector';
 import { Order, Receipt } from '../models';
-import { setOrder, setSelectedOrder } from '../store/order.actions';
+import { initSetOrder, setSelectedOrder } from '../store/order.actions';
 import { initSetReceipt, setReceipt } from '../store/receipt.actions';
 
 @Component({
@@ -68,29 +68,33 @@ export class ReceiptComponent implements AfterViewInit, OnDestroy {
       }
     });
 
-    this.items$.pipe(take(1)).subscribe(items => {
-      this.items = items;
-    });
-  }
-
-  ngOnInit() {
-    this.totalCost$.pipe(
-      take(1),
-    ).subscribe(total => {
-      this.totalReady = true;
-
-      if (this.receipt)
-        this.store.dispatch(initSetReceipt({ receipt: {
-          ...this.receipt,
-          total: total
-        }}));
-    });
   }
 
   ngAfterViewInit() {
     // Set focus on the input element after the view has been initialized
     this.setFocusOnInput();
-  }
+
+		// Get Total after load.
+		setTimeout(() => {
+			// Update count of items.
+			this.items$.pipe(take(1)).subscribe(items => {
+				this.items = items;
+			});
+
+
+			this.totalCost$.pipe(
+				take(1),
+			).subscribe(total => {
+				this.totalReady = true;
+
+				if (this.receipt)
+					this.store.dispatch(initSetReceipt({ receipt: {
+						...this.receipt,
+						total: total
+					}}));
+			});
+		}, 1000);
+	}
   
   ngOnDestroy(): void {
     this.unsubscribe$.next();
@@ -123,13 +127,13 @@ export class ReceiptComponent implements AfterViewInit, OnDestroy {
   }
 
 	deleteOrder(order: Order) {
-		if (confirm('Are you sure you want to order?')) {
+		if (confirm('Are you sure you want to Delete order?')) {
 			const currentDate = new Date();
 			const formattedDate = currentDate.toISOString().split('T')[0];
 			const deletedItem = this.items.filter(item => item.id === order.item)[0];
 
 			this.store.dispatch(setSelectedOrder({id: order.id}));
-			this.store.dispatch(setOrder({order: {
+			this.store.dispatch(initSetOrder({order: {
 				...order,
 				backup: false,
 				deleted_at: formattedDate,

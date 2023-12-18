@@ -53,7 +53,8 @@ export class ReportsComponent implements OnInit {
   }
 
 	available(unsync: number | null) {
-		return (unsync === 0 && this.isOnline);
+		return true;
+		//return (unsync === 0 && this.isOnline);
 	}
 
   onSubmit() {

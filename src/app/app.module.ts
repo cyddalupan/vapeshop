@@ -26,6 +26,7 @@ import { ExtraComponent } from './pages/extra/extra.component';
 import { EffectsModule } from '@ngrx/effects';
 import { InventoryEffects } from './pages/inventory/store/inventory.effects';
 import { ReceiptEffects } from './pages/pos/store/receipt.effects';
+import { OrderEffects } from './pages/pos/store/order.effects';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,7 @@ import { ReceiptEffects } from './pages/pos/store/receipt.effects';
       orders: orderReducer
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot(InventoryEffects, ReceiptEffects),
+    EffectsModule.forRoot(InventoryEffects, ReceiptEffects, OrderEffects),
     HttpClientModule,
 		ReactiveFormsModule,
   ],

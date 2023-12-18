@@ -6,7 +6,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Order, Receipt } from '../../models';
 import { selectCurrentReceipt } from '../../store/receipt.selector';
 import { Item } from 'src/app/pages/inventory/models';
-import { addOrder } from '../../store/order.actions';
+import { initAddOrder } from '../../store/order.actions';
 import { Router } from '@angular/router';
 import { updateItem } from 'src/app/pages/inventory/store/inventory.action';
 
@@ -65,7 +65,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
       updated_at: formattedDate,
       deleted_at: null,
 		};
-		this.store.dispatch(addOrder({ order: order }));
+		this.store.dispatch(initAddOrder({ order: order }));
     
 		this.store.dispatch(updateItem({
 			...this.item,

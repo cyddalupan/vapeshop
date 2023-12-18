@@ -81,7 +81,6 @@ export class ReceiptComponent implements AfterViewInit, OnDestroy {
 				this.items = items;
 			});
 
-
 			this.totalCost$.pipe(
 				take(1),
 			).subscribe(total => {
@@ -120,8 +119,8 @@ export class ReceiptComponent implements AfterViewInit, OnDestroy {
 
   itemNameById(id: number) {
     const matchId = this.items.filter(item => item.id === id);
-    if (matchId) {
-      return matchId[0].name;
+    if (matchId && matchId[0]?.name) {
+      return matchId[0]?.name;
     }
     return "Item not found";
   }

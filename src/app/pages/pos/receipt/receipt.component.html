@@ -35,7 +35,7 @@
       <tbody>
          <tr *ngFor="let order of (orders$ | async)">
             <th scope="row">{{ itemNameById(order.item) }}</th>
-            <td>{{ order.price }}xxx</td>
+            <td>{{ order.price }}</td>
             <td>{{ order.quantity }}</td>
             <td role="button" class="text-danger no-print" (click)="deleteOrder(order)">
                <i class="bi bi-trash3" ></i>

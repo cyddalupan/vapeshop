@@ -1,6 +1,6 @@
 {
   "name": "vapeshop",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "author": "Cleddrence Dalupan",
   "description": "Inventory and POS",
   "main": "main.js",
@@ -24,6 +24,7 @@
     "@angular/platform-browser": "^16.1.0",
     "@angular/platform-browser-dynamic": "^16.1.0",
     "@angular/router": "^16.1.0",
+    "@ngrx/effects": "^17.0.1",
     "@ngrx/entity": "^16.1.0",
     "@ngrx/store": "^16.1.0",
     "@ngrx/store-devtools": "^16.1.0",

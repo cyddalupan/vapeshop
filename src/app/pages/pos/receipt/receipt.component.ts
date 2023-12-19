@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subject, combineLatest, debounceTime, delay, map, take, takeUntil } from 'rxjs';
+import { Subject, combineLatest, debounceTime, delay, map, take, takeUntil, tap } from 'rxjs';
 
 import { updateItem } from 'src/app/pages/inventory/store/inventory.action';
 import { SetItem } from '../../inventory/store/inventory.action';
@@ -10,8 +10,8 @@ import { selectCurrentReceipt } from '../store/receipt.selector';
 import { Item } from '../../inventory/models';
 import { selectAllOrders } from '../store/order.selector';
 import { Order, Receipt } from '../models';
-import { setOrder, setSelectedOrder } from '../store/order.actions';
-import { setReceipt } from '../store/receipt.actions';
+import { initSetOrder, setSelectedOrder } from '../store/order.actions';
+import { initSetReceipt, setReceipt } from '../store/receipt.actions';
 
 @Component({
   selector: 'app-receipt',
@@ -68,28 +68,32 @@ export class ReceiptComponent implements AfterViewInit, OnDestroy {
       }
     });
 
-    this.items$.pipe(take(1)).subscribe(items => {
-      this.items = items;
-    });
   }
 
   ngAfterViewInit() {
     // Set focus on the input element after the view has been initialized
     this.setFocusOnInput();
 
-    this.totalCost$.pipe(
-      takeUntil(this.unsubscribe$),
-      delay(1000)
-    ).subscribe(total => {
-      this.totalReady = true;
+		// Get Total after load.
+		setTimeout(() => {
+			// Update count of items.
+			this.items$.pipe(take(1)).subscribe(items => {
+				this.items = items;
+			});
 
-      if (this.receipt)
-        this.store.dispatch(setReceipt({ receipt: {
-          ...this.receipt,
-          total: total
-        }}));
-    });
-  }
+			this.totalCost$.pipe(
+				take(1),
+			).subscribe(total => {
+				this.totalReady = true;
+
+				if (this.receipt)
+					this.store.dispatch(initSetReceipt({ receipt: {
+						...this.receipt,
+						total: total
+					}}));
+			});
+		}, 1000);
+	}
   
   ngOnDestroy(): void {
     this.unsubscribe$.next();
@@ -115,20 +119,20 @@ export class ReceiptComponent implements AfterViewInit, OnDestroy {
 
   itemNameById(id: number) {
     const matchId = this.items.filter(item => item.id === id);
-    if (matchId) {
-      return matchId[0].name;
+    if (matchId && matchId[0]?.name) {
+      return matchId[0]?.name;
     }
     return "Item not found";
   }
 
 	deleteOrder(order: Order) {
-		if (confirm('Are you sure you want to order?')) {
+		if (confirm('Are you sure you want to Delete order?')) {
 			const currentDate = new Date();
 			const formattedDate = currentDate.toISOString().split('T')[0];
 			const deletedItem = this.items.filter(item => item.id === order.item)[0];
 
 			this.store.dispatch(setSelectedOrder({id: order.id}));
-			this.store.dispatch(setOrder({order: {
+			this.store.dispatch(initSetOrder({order: {
 				...order,
 				backup: false,
 				deleted_at: formattedDate,

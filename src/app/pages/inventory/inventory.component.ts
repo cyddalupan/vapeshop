@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { updateItem } from './store/inventory.action';
 import { selectAllItems } from './store/inventory.selector';
 import { Item } from './models';
-import { map } from 'rxjs';
+import { map, tap } from 'rxjs';
 
 @Component({
   selector: 'app-inventory',
@@ -13,7 +13,7 @@ import { map } from 'rxjs';
 })
 export class InventoryComponent {
 	items$ = this.store.select(selectAllItems).pipe(
-		map(item => item.filter(data => !data.deleted_at))
+		map(item => item.filter(data => data && !data.deleted_at))
 	);
 
 	constructor(
@@ -27,7 +27,7 @@ export class InventoryComponent {
 
       this.store.dispatch(updateItem({
 				...item,
-				backup: false,
+				backup: true,
 				deleted_at: formattedDate,
 			}))
     }

@@ -22,6 +22,11 @@ import { appReducer } from './store/app.reducer';
 import { receiptReducer } from './pages/pos/store/receipt.reducer';
 import { orderReducer } from './pages/pos/store/order.reducer';
 import { TableViewComponent } from './pages/reports/table-view/table-view.component';
+import { ExtraComponent } from './pages/extra/extra.component';
+import { EffectsModule } from '@ngrx/effects';
+import { InventoryEffects } from './pages/inventory/store/inventory.effects';
+import { ReceiptEffects } from './pages/pos/store/receipt.effects';
+import { OrderEffects } from './pages/pos/store/order.effects';
 
 @NgModule({
   declarations: [
@@ -35,6 +40,7 @@ import { TableViewComponent } from './pages/reports/table-view/table-view.compon
     InventoryEditComponent,
     ReceiptComponent,
     TableViewComponent,
+    ExtraComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +52,7 @@ import { TableViewComponent } from './pages/reports/table-view/table-view.compon
       orders: orderReducer
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    EffectsModule.forRoot(InventoryEffects, ReceiptEffects, OrderEffects),
     HttpClientModule,
 		ReactiveFormsModule,
   ],

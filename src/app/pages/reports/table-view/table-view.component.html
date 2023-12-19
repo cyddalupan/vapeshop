@@ -1,25 +1,27 @@
 <div *ngFor="let receipt of receipts" class="py-5">
-	<h4 class="my-3">Date: {{ receipt.updated_at | date:'fullDate' }}</h4>
-	<h4 class="my-3">Customer: {{ receipt.customer }}</h4>
-	<table class="table mb-0">
-		<thead>
-			<tr>
-				<th scope="col">Name</th>
-				<th scope="col">Price</th>
-				<th scope="col">Quantity</th>
-				<th scope="col">Total</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor="let order of filterOrder(receipt.id)">
-				<th scope="row">{{ itemName(order.item) }}</th>
-				<td>{{ order.price }}</td>
-				<td>{{ order.quantity }}</td>
-				<td>{{ order.price * order.quantity }}</td>
-			</tr>
-		</tbody>
-	</table>
-	<h4 class="my-3">Total: {{ receipt.total }}</h4>
+	<div *ngIf="filterOrder(receipt.id).length > 0">
+		<h4 class="my-3">Date: {{ receipt.updated_at | date:'fullDate' }}</h4>
+		<h4 class="my-3">Customer: {{ receipt.customer }}</h4>
+		<table class="table mb-0">
+			<thead>
+				<tr>
+					<th scope="col">Name</th>
+					<th scope="col">Price</th>
+					<th scope="col">Quantity</th>
+					<th scope="col">Total</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let order of filterOrder(receipt.id)">
+					<th scope="row">{{ itemName(order.item) }}</th>
+					<td>{{ order.price }}</td>
+					<td>{{ order.quantity }}</td>
+					<td>{{ order.price * order.quantity }}</td>
+				</tr>
+			</tbody>
+		</table>
+		<h4 class="my-3">Total: {{ receipt.total }}</h4>
+	</div>
 </div>
 <div class="row">
 	<div class="col-md-7">

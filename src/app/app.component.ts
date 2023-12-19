@@ -31,10 +31,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 	unSyncTotal$ = this.store.select(SelectCount);
 
-  unsyncItem$ = this.store.select(selectAllItems).pipe(
-    map(items => (items.filter(item => item.backup !== true)))
-  );
-
   unsyncReceipts: Receipt[] = [];
   unsyncReceipt$ = this.store.select(selectAllReceipts).pipe(
     map(receipts => (receipts.filter(receipt => receipt.backup !== true)))
@@ -52,6 +48,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
+    this.inventoryService.fetchCloudData();
+		/** Local Storage to store
     const local = JSON.parse(String(localStorage.getItem('app')));
 		if (local?.inventory)
 			this.store.dispatch(InitializeItem(local.inventory));
@@ -69,11 +67,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         console.log("correct login",data);
       }
     });
-
-    this.unsyncItem$.subscribe(data => {
-      this.unsyncItemCount = data.length;
-			this.updateUnsyncCount();
-    });
+		*/
 
     this.unsyncReceipt$.subscribe(data => {
       this.unsyncReceiptCount = data.length;

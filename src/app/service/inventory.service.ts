@@ -5,7 +5,7 @@ import { environment } from 'src/environment/environment';
 import { Item } from '../pages/inventory/models';
 import { Observable, catchError, map, take, throwError } from 'rxjs';
 import { selectAllItems } from '../pages/inventory/store/inventory.selector';
-import { AddItem, deleteItem } from '../pages/inventory/store/inventory.action';
+import { AddItem, FeedItem, deleteItem } from '../pages/inventory/store/inventory.action';
 import { ReceiptService } from './receipt.service';
 import { selectAllOrders } from '../pages/pos/store/order.selector';
 import { setOrder } from '../pages/pos/store/order.actions';
@@ -98,7 +98,7 @@ export class InventoryService implements OnInit {
         this.store.dispatch(deleteItem(liveItem.id));	
 
         // add store data.
-        this.store.dispatch(AddItem({...liveItem, backup: true}));
+        this.store.dispatch(FeedItem({...liveItem, backup: true}));
       });
     });
   }

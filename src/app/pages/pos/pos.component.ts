@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Receipt } from './models';
-import { addReceipt, setSelectedReceipt } from './store/receipt.actions';
+import { loadAddReceipt } from './store/receipt.actions';
 
 @Component({
   selector: 'app-pos',
@@ -47,8 +47,7 @@ export class PosComponent implements OnInit {
       updated_at: formattedDate,
       deleted_at: null,
 		};
-		this.store.dispatch(addReceipt({ receipt: receipt }));
-		this.store.dispatch(setSelectedReceipt({ id: currentId }));
+		this.store.dispatch(loadAddReceipt({ receipt: receipt }));
 		this.router.navigate(['/receipt']);
   }
 }

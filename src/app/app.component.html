@@ -4,7 +4,8 @@
       <img src="./assets/img/logo-clean.png" class="img-fluid" style="width:100px">
     </a>
     <div class="d-flex">
-      <button *ngIf="isOnline"
+      <!-- Sync button
+			<button *ngIf="isOnline"
         type="button"
 				class="btn no-print {{ getSyncColor((unSyncTotal$ | async)) }}"
 				routerLink="/home"
@@ -16,6 +17,7 @@
       <div *ngIf="!isOnline" class="fw-bold text-secondary">
         You Are Currently Offline
       </div>
+			-->
     </div>
   </div>
 </nav>

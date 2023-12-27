@@ -20,7 +20,7 @@ export class TableViewComponent {
   }
 
 	itemName(itemId: number) {
-		return this.items.filter(item => item.id === itemId)?.[0].name;
+		return this.items.filter(item => item.id === itemId)?.[0]?.name;
 	}
 
   print() {
